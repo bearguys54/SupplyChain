@@ -4,7 +4,7 @@ const apiResponse = require('../utils/apiResponse.js');
 exports.createProduct = async (req, res) => {
     const { id, name, price , loggedUserType } = req.body;
     console.log('1');
-
+    console.log(id, name, price , loggedUserType);
     if (!name || !id || !price  || !loggedUserType) {
         return apiResponse.badRequest(res);
     }
@@ -46,11 +46,12 @@ exports.updateProduct = async (req, res) => {
 };
 
 exports.getProductbyId = async (req, res) => {
-    const { id } = req.body;
+    //const { id } = req.body;
+    const id ="admin";
     const { productId, role } = req.params
 
     console.log('1');
-
+    console.log(id);
     if (!productId || !id || !role ) {
         return apiResponse.badRequest(res);
     }
@@ -66,25 +67,18 @@ exports.getProductbyId = async (req, res) => {
     } else {
         return apiResponse.badRequest(res);
     }
+    console.log(modelRes);
     return apiResponse.send(res, modelRes);
 };
 
 exports.getAllProducts = async (req, res) => {
-    //console.log('12312312312');
-    //const { id } = req.body;
-    const { id } = req.headers['id'];
+    const { id } = req.body;
     const { role } = req.params
 
     console.log('req received processing');
-    console.log(id);
-    console.log(role);
-
+    console.log(id,role);
     if (!role ) {
-        console.log('role missing');
-        return apiResponse.badRequest(res);
-    }
-    if (!id) {
-        console.log('id missing');
+        console.log('id role missing');
         return apiResponse.badRequest(res);
     }
     console.log('id role checked');

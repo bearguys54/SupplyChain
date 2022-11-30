@@ -13,13 +13,10 @@ exports.generateRefreshToken = information => {
 
 exports.certifyAccessToken = token => {
     return new Promise((resolve, reject) => {
-        console.log("ver start");
         jwt.verify(token, secret, (err, decoded) => {
             if (err) {
-                console.log("ver reject");
                 reject(err);
             } else {
-                console.log("ver acceppt");
                 resolve(decoded);
             }
         });

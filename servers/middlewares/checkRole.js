@@ -3,7 +3,7 @@ const apiResponse = require('../utils/apiResponse.js');
 module.exports = async (req, res, next) => {
     const {loggedUserType} = req.body;
     console.log(req.body);
-
+    console.log("authenrole");
     if (!loggedUserType) {
         return apiResponse.unauthorized(res, 'Unauthorised user');
     }

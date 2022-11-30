@@ -25,24 +25,18 @@ exports.signup = async (isManufacturer, isMiddlemen, isConsumer, information) =>
 
 exports.signin = async (isManufacturer, isMiddlemen, isConsumer, information) => {
     const { id, password } = information;
-    console.log("0000");
 
     const networkObj = await network.connect(isManufacturer, isMiddlemen, isConsumer, "admin");
     let contractRes;
-    console.log("1111");
+    console.log("conneted");
     contractRes = await network.invoke(networkObj, 'signIn', id, password);
+    console.log("test3");
     const error = networkObj.error || contractRes.error;
-    console.log("11112222");
     if (error) {
-        console.log("2222");
         const status = networkObj.status || contractRes.status;
         return apiResponse.createModelRes(status, error);
-
-
     }
-    console.log("contract res");
     console.log(contractRes);
-    console.log("3333");
     const { Name, UserType } = contractRes;
     const accessToken = authenticateUtil.generateAccessToken({ id, UserType, Name });
     return apiResponse.createModelRes(200, 'Success', { id, UserType, Name, accessToken });
@@ -60,6 +54,6 @@ exports.getAllUser = async (isManufacturer, isMiddlemen, isConsumer, information
         const status = networkObj.status || contractRes.status;
         return apiResponse.createModelRes(status, error);
     }
-
+    console.log("!error getall:"+ contractRes);
     return apiResponse.createModelRes(200, 'Success', contractRes);
 };

@@ -15,7 +15,7 @@ exports.signup = async (req, res) => {
 
     let modelRes;
 
-    if (role === 'manufacturer') {
+    if (role === 'admin') {
         modelRes = await authModel.signup(true, false, false, {  id, userType, address, name, email, password });
     } else if (role === 'middlemen') {
         modelRes = await authModel.signup(false, true, false, {  id, userType, address, name, email, password });
@@ -29,26 +29,24 @@ exports.signup = async (req, res) => {
 };
 
 exports.signin = async (req, res) => {
-    //console.log("1111111111111111111111111111111");
     const { id, password } = req.body;
     const { role } = req.params;
+    console.log("role:"+role+" "+id + " "+ password);
     if (!id || !password || !role) {
         return apiResponse.badRequest(res);
     }
+
     let modelRes;
-    //console.log("22222222222222222");
     if (role === 'manufacturer') {
         modelRes = await authModel.signin(true, false, false, { id, password });
-        //console.log("3333333333");
     } else if (role === 'middlemen') {
         modelRes = await authModel.signin(false, true, false, { id, password });
     } else if (role === 'consumer') {
         modelRes = await authModel.signin(false, false, true, { id, password });
     } else {
         return apiResponse.badRequest(res);
-        console.log("4444444444");
     }
-
+    console.log(modelRes);
     return apiResponse.send(res, modelRes);
 };
 
@@ -56,8 +54,6 @@ exports.signin = async (req, res) => {
 exports.getAllUser = async (req, res) => {
     const { id } = req.body;
     const { role } = req.params;
-
-    console.log("id: "+id)
 
     let modelRes;
     if (role === 'manufacturer') {
@@ -69,5 +65,6 @@ exports.getAllUser = async (req, res) => {
     } else {
         return apiResponse.badRequest(res);
     }
+    console.log(modelRes);
     return apiResponse.send(res, modelRes);
 };

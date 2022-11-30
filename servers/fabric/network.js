@@ -53,7 +53,7 @@ exports.connect = async (isManufacturer, isMiddleMen, isConsumer, userID) => {
         const wallet = new FileSystemWallet(walletPath);
         const userExists = await wallet.exists(userID);
         if (!userExists) {
-            console.error(`An identity for the user ${userID} does not exist in the wallet haha. Register ${userID} first`);
+            console.error(`An identity for the user ${userID} does not exist in the wallet. Register ${userID} first`);
             return { status: 401, error: 'User identity does not exist in the wallet.' };
         }
 
@@ -100,7 +100,7 @@ exports.invoke = async (networkObj, ...funcAndArgs) => {
         const funcAndArgsStrings = funcAndArgs.map(elem => String(elem));
         console.log(funcAndArgsStrings);
         const response = await networkObj.contract.submitTransaction(...funcAndArgsStrings);
-        console.log(response);
+        console.log(response.toString("utf8"));
         console.log(`Transaction ${funcAndArgs} has been submitted: ${response}`);
 
         return JSON.parse(response);

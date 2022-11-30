@@ -34,7 +34,7 @@ exports.updateProduct = async ( isManufacturer, isMiddlemen, isConsumer ,informa
 exports.getProductById = async ( isManufacturer, isMiddlemen, isConsumer ,information )=> {
     const { productId, id } = information;
 
-    const networkObj = await network.connect(isManufacturer, isMiddlemen, isConsumer, id);
+    const networkObj = await network.connect(isManufacturer, isMiddlemen, isConsumer, "admin");
     const contractRes = await network.invoke(networkObj, 'queryAsset', productId);
 
     const error = networkObj.error || contractRes.error;
@@ -49,7 +49,7 @@ exports.getProductById = async ( isManufacturer, isMiddlemen, isConsumer ,inform
 exports.getAllProducts = async ( isManufacturer, isMiddlemen, isConsumer ,information )=> {
     const { id } = information;
 
-    const networkObj = await network.connect(isManufacturer, isMiddlemen, isConsumer, id);
+    const networkObj = await network.connect(isManufacturer, isMiddlemen, isConsumer, "admin");
     const contractRes = await network.invoke(networkObj, 'queryAll', 'Product');
 
     const error = networkObj.error || contractRes.error;
