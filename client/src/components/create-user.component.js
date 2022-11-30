@@ -13,6 +13,7 @@ export class CreateUser extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
+      id:"",
       name: "",
       email: "",
       userType: "",
@@ -43,19 +44,19 @@ export class CreateUser extends Component {
   onChangeUsertype(e) {
     if (e.target.value === "admin") {
       this.setState({
-        role: "admin",
+        userType: "admin",
       });
     } else if (e.target.value === "manufacturer") {
       this.setState({
-        role: "manufacturer",
+        userType: "manufacturer",
       });
     } else if (e.target.value === "consumer") {
       this.setState({
-        role: "consumer",
+        userType: "consumer",
       });
     } else if (e.target.value === "wholesaler" || e.target.value === "retailer" || e.target.value === "consumer"){
       this.setState({
-        role: "middlemen",
+        userType: "middlemen",
       });
     }
     this.setState({
@@ -72,15 +73,16 @@ export class CreateUser extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-
+    this.state.role = sessionStorage.getItem("userType");
     const user = {
+      id: sessionStorage.getItem("userId"),
       name: this.state.name,
       email: this.state.email,
       userType: this.state.userType,
       address: this.state.address,
       password: this.state.password,
+      loggedUserType:this.state.role,
     };
-
     const headers = {
       "x-access-token": sessionStorage.getItem("jwtToken"),
     };
@@ -88,7 +90,7 @@ export class CreateUser extends Component {
     console.log(user);
 
     axios
-      .post("http://192.168.0.108:8090/user/signup/" + this.state.role, user, {
+      .post("http://localhost:8090/user/signup/" + this.state.role, user, {
         headers: headers,
       })
       .then((res) => console.log(res));

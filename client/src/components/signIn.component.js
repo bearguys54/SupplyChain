@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+import '../assets/scss/signin.css';
+
 export class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -11,10 +13,10 @@ export class SignIn extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      userType: "manufacturer",
+      userType: "",
       name: "",
       password: "",
-      role: "manufacturer",
+      role: "",
     };
   }
 
@@ -43,7 +45,6 @@ export class SignIn extends Component {
     this.setState({
       userType: e.target.value,
     });
-    console.log(this.state.userType);
   }
 
   onChangeName(e) {
@@ -58,98 +59,125 @@ export class SignIn extends Component {
     });
   }
 
-  onSubmit(e) {
+  async onSubmit(e) {
     e.preventDefault();
-
     const signIn = {
       id: this.state.name,
       password: this.state.password,
     };
-
     console.log(signIn);
-    console.log("logginin");
 
-    axios
+    
+    await axios
       .post("http://localhost:8090/user/signin/" + this.state.role, signIn)
-      .then(() => {
-        //console.log(res.data.data.accessToken);
-        console.log("setting auth token");
-        //sessionStorage.setItem("jwtToken", res.data.data.accessToken);
+      .then((res) => {
+        console.log(res.data.data);
+        //sessionStorage.clear();
+        sessionStorage.setItem("jwtToken", res.data.data.accessToken);
         sessionStorage.setItem("role", this.state.role);
-        sessionStorage.setItem("usertype", this.state.userType);
-        console.log("storage:");
-        console.log(sessionStorage.getItem("usertype"));
+        sessionStorage.setItem("userType", res.data.data.UserType);
+        sessionStorage.setItem("userId", res.data.data.id);
+        this.userType = res.data.data.UserType;
+        this.role = res.data.data.id;
+        console.log("hi");
       });
+      console.log(sessionStorage.getItem("userType"),sessionStorage.getItem("userId"));
+      //console.log(this.userType,this.role);
+    //if (this.state.usertype === "admin") {
+        window.location = "/users";
+    //}
+    // else {
+    //   window.location = "/products"
+    // }
+    // switch (this.state.userType) {
+    //     case "admin":
+    //         console.log("admin");
+    //         window.location = "/users"
+    //         break;
+    //     case "manufacturer":
+    //         console.log("manufacturer");
+    //         window.location = "/products"
+    //         break;
+    //     case "middlemen":
+    //         console.log("middlemen");
+    //         window.location = "/products"
+    //         break;
+    //     case "consumer":
+    //         console.log("consumer");
+    //         window.location = "/products"
+    //         break;
+    //     default:
+    //         break;
+    // }
 
-      sessionStorage.setItem("role", this.state.role);
-      sessionStorage.setItem("usertype", this.state.userType);
-      console.log("storage:");
-      console.log(sessionStorage.getItem("usertype"));
-      
-    if (this.state.usertype === "admin") {
-      window.location = "/users"
-    }
-    else {
-      window.location = "/users"
-    }
   }
 
   render() {
     return (
-      <div>
-        <h3>Sign In</h3>
-        <br />
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <label>Usertype: </label>
-            <select
-              ref="usertypeInput"
-              required
-              className="form-control"
-              value={this.state.userType}
-              onChange={this.onChangeUserType}
-            >
-              <option key="manufacturer" value="manufacturer">
-                Manufacturer
-              </option>
-              <option key="distributor" value="distributor">
-                Distributor
-              </option>
-              <option key="wholesaler" value="wholesaler">
-                Wholesaler
-              </option>
-              <option key="retailer" value="retailer">
-                Retailer
-              </option>
-              <option key="consumer" value="consumer">
-                Consumer
-              </option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Name: </label>
-            <input
-              type="text"
-              required
-              className="form-control"
-              value={this.state.name}
-              onChange={this.onChangeName}
-            />
-          </div>
-          <div className="form-group">
-            <label>Password: </label>
-            <input
-              type="password"
-              required
-              className="form-control"
-              value={this.state.password}
-              onChange={this.onChangePassword}
-            />
-          </div>
-          <div className="form-group">
-            <input type="submit" value="Sign In" className="btn btn-primary" />
-          </div>
-        </form>
+      <div class="container" id="signIn">
+        <div class="row">
+            <div class="col-lg-3 col-md-2"></div>
+            <div class="col-lg-6 col-md-8 login-box">
+                <div class="col-lg-12 login-key">
+                    <i class="fa fa-key" aria-hidden="true"></i>
+                </div>
+                <div class="col-lg-12 login-title">
+                    Sign-In
+                </div>
+
+                <div class="col-lg-12 login-form">
+                    <div class="col-lg-12 login-form">
+                        <form onSubmit={this.onSubmit}>
+                        <div className="form-group">
+                          <label>Usertype: </label>
+                          <select
+                            ref="usertypeInput"
+                            required
+                            className="form-control"
+                            value={this.state.userType}
+                            onChange={this.onChangeUserType}>
+                                <option key="admin" value="admin">
+                                    Admin
+                                </option>
+                                <option key="manufacturer" value="manufacturer">
+                                    Manufacturer
+                                </option>
+                                <option key="distributor" value="distributor">
+                                    Distributor
+                                </option>
+                                <option key="wholesaler" value="wholesaler">
+                                    Wholesaler
+                                </option>
+                                <option key="retailer" value="retailer">
+                                    Retailer
+                                </option>
+                                <option key="consumer" value="consumer">
+                                    Consumer
+                                </option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                              <label class="form-control-label">USERNAME</label>
+                              <input onChange={this.onChangeName} type="text" class="form-control"/>
+                          </div>
+                          <div class="form-group">
+                              <label class="form-control-label">PASSWORD</label>
+                              <input onChange={this.onChangePassword} type="password" class="form-control" />
+                          </div>
+
+                          <div class="col-lg-12 loginbttm">
+                              <div class="col-lg-6 login-btm login-text">
+                              </div>
+                              <div class="col-lg-6 login-btm login-button">
+                                  <button type="submit" class="btn btn-outline-primary">LOGIN</button>
+                              </div>
+                          </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-2"></div>
+            </div>
+        </div>
       </div>
     );
   }

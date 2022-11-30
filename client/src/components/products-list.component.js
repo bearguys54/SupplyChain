@@ -11,7 +11,7 @@ const Product = (props) => (
     <td>{props.product.Status}</td>
     <td>{props.product.Price}</td>
     <td>
-      <Link to={"/edit/" + props.product._id}>Edit</Link>
+      <Link to={"/updateProduct/" + props.product.ProductID}>Edit</Link>
     </td>
   </tr>
 );
@@ -21,30 +21,19 @@ export class ProductsList extends Component {
     super(props);
 
     this.state = {
-      //role: sessionStorage.getItem('role'),
-      role: "manufacturer",
+      role: sessionStorage.getItem('role'),
       products: [],
     };
-
-    this.setState({
-      role: "manufacturer",
-    });
   }
 
   componentDidMount() {
     const headers = {
-      //"id": sessionStorage.getItem("jwtToken"),
-      "id": "User1"
-
-    };
-    const signIn = {
-      id: this.state.name,
-      password: this.state.password,
+      "x-access-token": sessionStorage.getItem("jwtToken"),
     };
 
     axios
-      .get("http://localhost:8090/product/manufacturer", {
-        headers: headers
+      .get("http://localhost:8090/product/" + this.state.role, {
+        headers: headers,
       })
       .then((response) => {
         this.setState({
@@ -52,7 +41,6 @@ export class ProductsList extends Component {
         });
       })
       .catch((error) => console.log(error));
-      //console.log("123123");
   }
 
   productsList() {

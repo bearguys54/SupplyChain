@@ -13,6 +13,7 @@ export class CreateProduct extends Component {
       product_name: "",
       price: 0,
     };
+    console.log(sessionStorage.getItem("userType"));
   }
 
   onChangeProductName(e) {
@@ -31,18 +32,20 @@ export class CreateProduct extends Component {
     e.preventDefault();
 
     const product = {
+      id: sessionStorage.getItem("userId"),
       name: this.state.product_name,
       price: this.state.price,
+      loggedUserType:sessionStorage.getItem("userType")
     };
 
     const headers = {
       "x-access-token": sessionStorage.getItem("jwtToken"),
     };
 
-    console.log(product);
+    //console.log(product);
 
     axios
-      .post("http://192.168.0.108:8090/product", product, { headers: headers })
+      .post("http://localhost:8090/product", product, { headers: headers })
       .then((res) => console.log(res));
 
     window.location = "/products";

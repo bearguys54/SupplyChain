@@ -8,6 +8,7 @@ export class EditProduct extends Component {
     super(props);
 
     this.state = {
+      user:{id: sessionStorage.getItem("userId")},
       product_name: "",
       date: {
         manufacturerDate: "",
@@ -28,17 +29,18 @@ export class EditProduct extends Component {
       manufacturers: [],
     };
   }
-
   componentDidMount() {
-    axios.get("http://localhost:products/" + this.props.match.params.id)
+    console.log(sessionStorage.getItem("role"));
+    axios.get("http://localhost:8090/product/" + this.props.match.params.id+"/"+sessionStorage.getItem("role"))
     .then((response) => {
       this.setState({
-        product_name: response.data.product_name,
-        manufacturer_id: response.data.manufacturer_id,
-        manufacturerDate: response.data.manufacturerDate,
-        status: response.data.status,
-        price: response.data.price,
+        product_name: response.data.data.Name,
+        manufacturer_id: response.data.data.ManufacturerID,
+        manufacturerDate: response.data.data.Date.ManufacturerDate,
+        status: response.data.data.Status,
+        price: response.data.data.Price,
       })
+      console.log(response.data);
     })
   }
 
@@ -89,7 +91,13 @@ export class EditProduct extends Component {
               value={this.state.manufacturer_id}
               onChange={this.onChangeManufacturerId}
             >
-              {this.state.manufacturers.map(function (manufacturer) {
+                <option
+                    key={this.state.manufacturer_id}
+                    value={this.state.manufacturer_id}
+                  >
+                    {this.state.manufacturer_id}
+                  </option>
+              {/* {this.state.manufacturers.map(function (manufacturer) {
                 return (
                   <option
                     key={manufacturer.user_id}
@@ -98,7 +106,7 @@ export class EditProduct extends Component {
                     {manufacturer.user_id}
                   </option>
                 );
-              })}
+              })} */}
             </select>
           </div>
           <div className="form-group">
