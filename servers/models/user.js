@@ -4,10 +4,10 @@ const authenticateUtil = require('../utils/authenticate.js');
 
 
 exports.signup = async (isManufacturer, isMiddlemen, isConsumer, information) => {
-    const { id, userType, address, name, email, password } = information;
+    const { userType, address, name, email, password } = information;
 
     let networkObj;
-    networkObj = await network.connect(isManufacturer, isMiddlemen, isConsumer, id);
+    networkObj = await network.connect(isManufacturer, isMiddlemen, isConsumer, "admin");
     
     let contractRes;
     contractRes = await network.invoke(networkObj, 'createUser', name, email, userType, address, password);
@@ -25,7 +25,7 @@ exports.signup = async (isManufacturer, isMiddlemen, isConsumer, information) =>
 
 exports.signin = async (isManufacturer, isMiddlemen, isConsumer, information) => {
     const { id, password } = information;
-
+    console.log("conneting");
     const networkObj = await network.connect(isManufacturer, isMiddlemen, isConsumer, "admin");
     let contractRes;
     console.log("conneted");
@@ -54,6 +54,5 @@ exports.getAllUser = async (isManufacturer, isMiddlemen, isConsumer, information
         const status = networkObj.status || contractRes.status;
         return apiResponse.createModelRes(status, error);
     }
-    console.log("!error getall:"+ contractRes);
     return apiResponse.createModelRes(200, 'Success', contractRes);
 };

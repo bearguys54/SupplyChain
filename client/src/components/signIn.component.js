@@ -16,7 +16,7 @@ export class SignIn extends Component {
       userType: "",
       name: "",
       password: "",
-      role: "",
+      role: "manufacturer",
     };
   }
 
@@ -79,7 +79,6 @@ export class SignIn extends Component {
         sessionStorage.setItem("userId", res.data.data.id);
         this.userType = res.data.data.UserType;
         this.role = res.data.data.id;
-        console.log("hi");
       });
       console.log(sessionStorage.getItem("userType"),sessionStorage.getItem("userId"));
       //console.log(this.userType,this.role);

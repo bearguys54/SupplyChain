@@ -4,7 +4,7 @@ const apiResponse = require('../utils/apiResponse.js');
 exports.createProduct = async information => {
     const { name, id, price} = information;
 
-    const networkObj = await network.connect(true, false, false, id);
+    const networkObj = await network.connect(true, false, false, "admin");
     const contractRes = await network.invoke(networkObj, 'createProduct', name, id, price);
     console.log(contractRes);
     const error = networkObj.error || contractRes.error;

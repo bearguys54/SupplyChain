@@ -16,7 +16,7 @@ export class CreateUser extends Component {
       id:"",
       name: "",
       email: "",
-      userType: "",
+      userType: "manufacturer",
       address: "",
       password: "",
       role: "",
@@ -42,11 +42,7 @@ export class CreateUser extends Component {
   }
 
   onChangeUsertype(e) {
-    if (e.target.value === "admin") {
-      this.setState({
-        userType: "admin",
-      });
-    } else if (e.target.value === "manufacturer") {
+    if (e.target.value === "manufacturer") {
       this.setState({
         userType: "manufacturer",
       });
@@ -71,7 +67,7 @@ export class CreateUser extends Component {
     });
   }
 
-  onSubmit(e) {
+  async onSubmit(e) {
     e.preventDefault();
     this.state.role = sessionStorage.getItem("userType");
     const user = {
@@ -89,7 +85,7 @@ export class CreateUser extends Component {
 
     console.log(user);
 
-    axios
+    await axios
       .post("http://localhost:8090/user/signup/" + this.state.role, user, {
         headers: headers,
       })

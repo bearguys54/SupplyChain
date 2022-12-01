@@ -7,30 +7,34 @@ export class EditProduct extends Component {
   constructor(props) {
     super(props);
 
+    this.onChangeProductName = this.onChangeProductName.bind(this);
+    this.onChangePrice = this.onChangePrice.bind(this);
+    this.onChangeManufacturerDate = this.onChangeManufacturerDate.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+
     this.state = {
-      user:{id: sessionStorage.getItem("userId")},
-      product_name: "",
-      date: {
-        manufacturerDate: "",
-        sendToWholesalerDate: "",
-        sendToDistributorDate: "",
-        sendToRetailerDate: "",
-        sellToConsumerDate: "",
-        orderedDate: "",
-        deliveredDate: "",
-      },
-      manufacturer_id: "",
-      distributor_id: "",
-      wholesaler_id: "",
-      consumer_id: "",
-      retailer_id: "",
-      status: "",
-      price: 0,
-      manufacturers: [],
+        loggedUserType:sessionStorage.getItem("UserType"),
+        product_name: "",
+        date: {
+            manufacturerDate: "",
+            sendToWholesalerDate: "",
+            sendToDistributorDate: "",
+            sendToRetailerDate: "",
+            sellToConsumerDate: "",
+            orderedDate: "",
+            deliveredDate: "",
+        },
+        manufacturer_id: "",
+        distributor_id: "",
+        wholesaler_id: "",
+        consumer_id: "",
+        retailer_id: "",
+        status: "",
+        price: 0,
+        manufacturers: [],
     };
   }
   componentDidMount() {
-    console.log(sessionStorage.getItem("role"));
     axios.get("http://localhost:8090/product/" + this.props.match.params.id+"/"+sessionStorage.getItem("role"))
     .then((response) => {
       this.setState({
@@ -40,7 +44,6 @@ export class EditProduct extends Component {
         status: response.data.data.Status,
         price: response.data.data.Price,
       })
-      console.log(response.data);
     })
   }
 
@@ -65,6 +68,26 @@ export class EditProduct extends Component {
   onChangeManufacturerDate(date) {
     const newDate = { ...this.state.date, manufacturerDate: date };
     this.setState({ date: newDate });
+  }
+
+  async onSubmit(e) {
+    e.preventDefault();
+    const product = {
+        id: sessionStorage.getItem("userId"),
+        name: this.state.product_name,
+        price: this.state.price,
+        loggedUserType:sessionStorage.getItem("userType")
+      };
+    const headers = {
+      "x-access-token": sessionStorage.getItem("jwtToken"),
+    };
+    await axios
+      .put("http://localhost:8090/product/" + this.props.match.params.id+"/" + sessionStorage.getItem("role"), product, {
+        headers: headers,
+      })
+      .then((res) => console.log(res));
+
+    window.location = "/products";
   }
 
   render() {
@@ -97,16 +120,7 @@ export class EditProduct extends Component {
                   >
                     {this.state.manufacturer_id}
                   </option>
-              {/* {this.state.manufacturers.map(function (manufacturer) {
-                return (
-                  <option
-                    key={manufacturer.user_id}
-                    value={manufacturer.user_id}
-                  >
-                    {manufacturer.user_id}
-                  </option>
-                );
-              })} */}
+              
             </select>
           </div>
           <div className="form-group">
@@ -131,7 +145,7 @@ export class EditProduct extends Component {
           <div className="form-group">
             <input
               type="submit"
-              value="Create Product"
+              value="Update Product"
               className="btn btn-primary"
             />
           </div>

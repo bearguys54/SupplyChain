@@ -2,13 +2,13 @@ const authModel = require('../models/user.js');
 const apiResponse = require('../utils/apiResponse.js');
 
 exports.signup = async (req, res) => {
-    const { id, userType, address, name, email, password } = req.body;
+    const { userType, address, name, email, password } = req.body;
     const { role } = req.params;
 
     console.log(req.body);
     console.log(role);
 
-    if ((!id || !userType || !address || !name  || !email || !password )) {
+    if ((!userType || !address || !name  || !email || !password )) {
         console.log('1');
         return apiResponse.badRequest(res);
     }
@@ -16,11 +16,11 @@ exports.signup = async (req, res) => {
     let modelRes;
 
     if (role === 'admin') {
-        modelRes = await authModel.signup(true, false, false, {  id, userType, address, name, email, password });
-    } else if (role === 'middlemen') {
-        modelRes = await authModel.signup(false, true, false, {  id, userType, address, name, email, password });
-    } else if (role === 'consumer') {
-        modelRes = await authModel.signup(false, false, true, {  id, userType, address, name, email, password });
+        modelRes = await authModel.signup(true, false, false, {  userType, address, name, email, password });
+    // } else if (role === 'middlemen') {
+    //     modelRes = await authModel.signup(false, true, false, {  id, userType, address, name, email, password });
+    // } else if (role === 'consumer') {
+    //     modelRes = await authModel.signup(false, false, true, {  id, userType, address, name, email, password });
     } else {
         return apiResponse.badRequest(res);
     }
@@ -37,7 +37,9 @@ exports.signin = async (req, res) => {
     }
 
     let modelRes;
-    if (role === 'manufacturer') {
+    if (role === 'admin') {
+        modelRes = await authModel.signin(true, false, false, { id, password });
+    }else if (role === 'manufacturer') {
         modelRes = await authModel.signin(true, false, false, { id, password });
     } else if (role === 'middlemen') {
         modelRes = await authModel.signin(false, true, false, { id, password });

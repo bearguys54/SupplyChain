@@ -28,7 +28,7 @@ export class CreateProduct extends Component {
     });
   }
 
-  onSubmit(e) {
+  async onSubmit(e) {
     e.preventDefault();
 
     const product = {
@@ -44,7 +44,7 @@ export class CreateProduct extends Component {
 
     //console.log(product);
 
-    axios
+    await axios
       .post("http://localhost:8090/product", product, { headers: headers })
       .then((res) => console.log(res));
 
