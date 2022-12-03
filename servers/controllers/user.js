@@ -70,3 +70,39 @@ exports.getAllUser = async (req, res) => {
     console.log(modelRes);
     return apiResponse.send(res, modelRes);
 };
+
+exports.getUserById = async (req, res) => {
+    const { userId, role } = req.params
+
+    console.log('1');
+    if (!userId || !role ) {
+        return apiResponse.badRequest(res);
+    }
+    console.log('2');
+    console.log('3');
+    let modelRes;
+    if( role === 'admin' ) {
+        modelRes = await authModel.getUserById(true, false, false, { userId, role });
+    }else {
+        return apiResponse.badRequest(res);
+    }
+    console.log(modelRes);
+    return apiResponse.send(res, modelRes);
+};
+exports.updateUser = async (req, res) => {
+    const { name, email, usertype , address } = req.body;
+    const { role, userId } = req.params;
+    console.log('1');
+    if (!userId || !name || !email || !usertype || !address || !role) {
+        return apiResponse.badRequest(res);
+    }
+    console.log('2');
+
+    let modelRes
+    if( role === 'admin' ) {
+        modelRes = await authModel.updateUser(true, false,false, { userId, name, email, usertype , address });
+    } else {
+        return apiResponse.badRequest(res);
+    }
+    return apiResponse.send(res, modelRes);
+};

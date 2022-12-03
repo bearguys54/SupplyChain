@@ -10,7 +10,7 @@ const User = (props) => (
     <td>{props.user.UserType}</td>
     <td>{props.user.Address}</td>
     <td>
-      <Link to={"/updateUser/" + props.user._id}>Edit</Link>
+      <Link to={"/updateUser/" + props.user.UserID}>Edit</Link>
     </td>
   </tr>
 );
@@ -41,8 +41,6 @@ export class UsersList extends Component {
         console.log(response.data.data);
       })
       .catch((error) => console.log(error));
-
-    console.log("logged in as: "+sessionStorage.getItem("userType"), sessionStorage.getItem("userId"));
   }
 
   usersList() {

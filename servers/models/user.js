@@ -56,3 +56,33 @@ exports.getAllUser = async (isManufacturer, isMiddlemen, isConsumer, information
     }
     return apiResponse.createModelRes(200, 'Success', contractRes);
 };
+
+exports.getUserById = async (isManufacturer, isMiddlemen, isConsumer, information) => {
+    const {userId, role } = information;
+
+    const networkObj = await network.connect(true, false, false, role);
+
+    const contractRes = await network.invoke(networkObj, 'queryAsset', userId);
+
+    const error = networkObj.error || contractRes.error;
+    if (error) {
+        const status = networkObj.status || contractRes.status;
+        return apiResponse.createModelRes(status, error);
+    }
+    return apiResponse.createModelRes(200, 'Success', contractRes);
+};
+
+exports.updateUser = async ( isManufacturer, isMiddlemen, isConsumer ,information ) => {
+    const { userId, name, email, usertype , address } = information;
+
+    const networkObj = await network.connect(isManufacturer, isMiddlemen, isConsumer, "admin");
+    const contractRes = await network.invoke(networkObj, 'updateUser',userId, name, email, usertype , address );
+
+    const error = networkObj.error || contractRes.error;
+    if (error) {
+        const status = networkObj.status || contractRes.status;
+        return apiResponse.createModelRes(status, error);
+    }
+
+    return apiResponse.createModelRes(200, 'Success', contractRes);
+};

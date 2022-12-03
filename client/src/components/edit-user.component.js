@@ -21,14 +21,15 @@ export class EditUser extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:5000/users/" + this.props.match.params.id)
+      .get("http://localhost:8090/user/" + this.props.match.params.id + "/" + sessionStorage.getItem("userType"))
       .then((response) => {
         this.setState({
-          name: response.data.name,
-          email: response.data.email,
-          usertype: response.data.usertype,
-          address: response.data.address,
+          name: response.data.data.Name,
+          email: response.data.data.Email,
+          usertype: response.data.data.UserType,
+          address: response.data.data.Address,
         });
+        console.log(response.data.data);
       });
   }
 
@@ -56,7 +57,7 @@ export class EditUser extends Component {
     });
   }
 
-  onSubmit(e) {
+  async onSubmit(e) {
     e.preventDefault();
 
     const user = {
@@ -68,11 +69,8 @@ export class EditUser extends Component {
     console.log(this.props.match);
     console.log(user);
 
-    axios
-      .post(
-        "http://localhost:5000/users/update/" + this.props.match.params.id,
-        user
-      )
+    await axios
+      .post("http://localhost:8090/user/" + this.props.match.params.id + "/" + sessionStorage.getItem("userType"),user)
       .then((res) => console.log(res.data));
 
     window.location = "/users";
@@ -110,19 +108,19 @@ export class EditUser extends Component {
               value={this.state.usertype}
               onChange={this.onChangeUsertype}
             >
-              <option key="Manufacturer" value="Manufacturer">
+              <option key="manufacturer" value="manufacturer">
                 Manufacturer
               </option>
-              <option key="Distributor" value="Distributor">
+              <option key="distributor" value="distributor">
                 Distributor
               </option>
-              <option key="Wholesaler" value="Wholesaler">
+              <option key="wholesaler" value="wholesaler">
                 Wholesaler
               </option>
-              <option key="Retailer" value="Retailer">
+              <option key="retailer" value="retailer">
                 Retailer
               </option>
-              <option key="Consumer" value="Consumer">
+              <option key="consumer" value="consumer">
                 Consumer
               </option>
             </select>
