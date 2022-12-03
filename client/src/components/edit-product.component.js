@@ -31,34 +31,33 @@ export class EditProduct extends Component {
     this.onChangePrice = this.onChangePrice.bind(this);
     this.onChangeManufacturerDate = this.onChangeManufacturerDate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onChangeWholesalerId = this.onChangeTransactTargetId.bind(this);
+    this.onChangeTransactTargetId = this.onChangeTransactTargetId.bind(this);
     this.beginTransact = this.beginTransact.bind(this);
     this.handleTransactSubmit = this.handleTransactSubmit.bind(this);
     this.transactTargetId = "";
-    // this.transactMsg = "Placeholder";
 
     this.state = {
-        loggedUserType:sessionStorage.getItem("UserType"),
-        product_name: "",
-        date: {
-            manufacturerDate: "",
-            sendToWholesalerDate: "",
-            sendToDistributorDate: "",
-            sendToRetailerDate: "",
-            sellToConsumerDate: "",
-            orderedDate: "",
-            deliveredDate: "",
-        },
-        manufacturer_id: "",
-        distributor_id: "",
-        wholesaler_id: "",
-        consumer_id: "",
-        retailer_id: "",
-        status: "",
-        price: 0,
-        manufacturers: [],
-        users: [],
-      	transactMsg: "Placeholder"
+      loggedUserType: sessionStorage.getItem("UserType"),
+      product_name: "",
+      date: {
+        manufacturerDate: "",
+        sendToWholesalerDate: "",
+        sendToDistributorDate: "",
+        sendToRetailerDate: "",
+        sellToConsumerDate: "",
+        orderedDate: "",
+        deliveredDate: "",
+      },
+      manufacturer_id: "",
+      distributor_id: "",
+      wholesaler_id: "",
+      consumer_id: "",
+      retailer_id: "",
+      status: "",
+      price: 0,
+      manufacturers: [],
+      users: [],
+      transactMsg: "Placeholder"
     };
 
   }
@@ -174,16 +173,16 @@ export class EditProduct extends Component {
   async onSubmit(e) {
     e.preventDefault();
     const product = {
-        id: sessionStorage.getItem("userId"),
-        name: this.state.product_name,
-        price: this.state.price,
-        loggedUserType:sessionStorage.getItem("userType")
-      };
+      id: sessionStorage.getItem("userId"),
+      name: this.state.product_name,
+      price: this.state.price,
+      loggedUserType: sessionStorage.getItem("userType")
+    };
     const headers = {
       "x-access-token": sessionStorage.getItem("jwtToken"),
     };
     await axios
-      .put("http://localhost:8090/product/" + this.props.match.params.id+"/" + sessionStorage.getItem("role"), product, {
+      .put("http://localhost:8090/product/" + this.props.match.params.id + "/" + sessionStorage.getItem("role"), product, {
         headers: headers,
       })
       .then((res) => console.log(res));
