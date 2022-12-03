@@ -41,6 +41,8 @@ export class UsersList extends Component {
         console.log(response.data.data);
       })
       .catch((error) => console.log(error));
+
+    console.log("logged in as: "+sessionStorage.getItem("userType"), sessionStorage.getItem("userId"));
   }
 
   usersList() {
