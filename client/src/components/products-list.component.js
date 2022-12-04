@@ -2,16 +2,24 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+const Product0 = 0;
+
 const Product = (props) => (
+
   <tr>
     <td>{props.product.ProductID}</td>
     <td>{props.product.Name}</td>
     <td>{props.product.ManufacturerID}</td>
     <td>{props.product.Date.ManufactureDate.substring(0, 10)}</td>
+    <td>{props.product.Date.SendToWholesalerDate.substring(0, 10)}</td>
+    <td>{props.product.Date.SendToDistributorDate.substring(0, 10)}</td>
+    <td>{props.product.Date.SendToRetailerDate.substring(0, 10)}</td>
+    <td>{props.product.Date.SellToConsumerDate.substring(0, 10)}</td>
     <td>{props.product.Status}</td>
     <td>{props.product.Price}</td>
-    <td>
-      <Link to={"/updateProduct/" + props.product.ProductID}>Edit</Link>
+    <td class="">
+    <Link to={"/updateProduct/" + props.product.ProductID}>Edit</Link>
+
     </td>
   </tr>
 );
@@ -22,25 +30,35 @@ export class ProductsList extends Component {
 
     this.state = {
       role: sessionStorage.getItem('role'),
+      //role: "manufacturer",
       products: [],
     };
+
+    this.setState({
+      role: sessionStorage.getItem('role'),
+    });
   }
 
   componentDidMount() {
     const headers = {
-      "x-access-token": sessionStorage.getItem("jwtToken"),
+      //"id": sessionStorage.getItem("jwtToken"),
+      "id": "User1"
     };
-
-    axios
-      .get("http://localhost:8090/product/" + this.state.role, {
-        headers: headers,
-      })
-      .then((response) => {
-        this.setState({
-          products: response.data.data,
-        });
-      })
-      .catch((error) => console.log(error));
+    const signIn = {
+      id: this.state.name,
+      password: this.state.password,
+    };
+    const userType = sessionStorage.getItem('userType');
+    if(userType){
+      axios
+        .get("http://localhost:8090/product/manufacturer", {headers: headers})
+        .then((response) => {
+          this.setState({
+            products: response.data.data,
+          });
+        })
+        .catch((error) => console.log(error));
+    }
   }
 
   productsList() {
@@ -66,6 +84,10 @@ export class ProductsList extends Component {
               <th>ProductName</th>
               <th>ManufacturerId</th>
               <th>ManufacturerDate</th>
+              <th>SendToWholesalerDate</th>
+              <th>SendToDistributorDate</th>
+              <th>SendToRetailerDate</th>
+              <th>SellToConsumerDate</th>
               <th>Status</th>
               <th>Price</th>
               <th>Actions</th>

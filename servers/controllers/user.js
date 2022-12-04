@@ -15,12 +15,12 @@ exports.signup = async (req, res) => {
 
     let modelRes;
 
-    if (role === 'admin') {
+    if (userType === 'manufacturer') {
         modelRes = await authModel.signup(true, false, false, {  userType, address, name, email, password });
-    // } else if (role === 'middlemen') {
-    //     modelRes = await authModel.signup(false, true, false, {  id, userType, address, name, email, password });
-    // } else if (role === 'consumer') {
-    //     modelRes = await authModel.signup(false, false, true, {  id, userType, address, name, email, password });
+    } else if (userType === 'wholesaler' || userType === 'distributor' || userType === 'retailer') {
+         modelRes = await authModel.signup(false, true, false, {  userType, address, name, email, password });
+    } else if (userType === 'consumer') {
+         modelRes = await authModel.signup(false, false, true, {  userType, address, name, email, password });
     } else {
         return apiResponse.badRequest(res);
     }
@@ -35,7 +35,6 @@ exports.signin = async (req, res) => {
     if (!id || !password || !role) {
         return apiResponse.badRequest(res);
     }
-
     let modelRes;
     if (role === 'admin') {
         modelRes = await authModel.signin(true, false, false, { id, password });
@@ -70,7 +69,6 @@ exports.getAllUser = async (req, res) => {
     console.log(modelRes);
     return apiResponse.send(res, modelRes);
 };
-
 exports.getUserById = async (req, res) => {
     const { userId, role } = req.params
 
@@ -106,3 +104,5 @@ exports.updateUser = async (req, res) => {
     }
     return apiResponse.send(res, modelRes);
 };
+
+

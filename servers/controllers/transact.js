@@ -5,6 +5,7 @@ exports.transactProduct = async (req, res) => {
     // find who initiates this event by decoding the token and getting the user type
     const { id, loggedUserType , productId , userId } = req.body;
     console.log('1');
+    
     if ( !userId || !loggedUserType || !productId || !id) {
         return apiResponse.badRequest(res);
     }

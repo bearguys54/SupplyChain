@@ -42,19 +42,6 @@ export class CreateUser extends Component {
   }
 
   onChangeUsertype(e) {
-    if (e.target.value === "manufacturer") {
-      this.setState({
-        userType: "manufacturer",
-      });
-    } else if (e.target.value === "consumer") {
-      this.setState({
-        userType: "consumer",
-      });
-    } else if (e.target.value === "wholesaler" || e.target.value === "retailer" || e.target.value === "consumer"){
-      this.setState({
-        userType: "middlemen",
-      });
-    }
     this.setState({
       userType: e.target.value,
     });

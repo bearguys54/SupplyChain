@@ -19,7 +19,7 @@ exports.createProduct = async information => {
 exports.updateProduct = async ( isManufacturer, isMiddlemen, isConsumer ,information ) => {
     const { productId, name, id, price} = information;
 
-    const networkObj = await network.connect(isManufacturer, isMiddlemen, isConsumer, id);
+    const networkObj = await network.connect(isManufacturer, isMiddlemen, false, id);
     const contractRes = await network.invoke(networkObj, 'updateProduct', productId, id, name, price);
 
     const error = networkObj.error || contractRes.error;

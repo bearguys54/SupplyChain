@@ -70,7 +70,7 @@ export class EditUser extends Component {
     console.log(user);
 
     await axios
-      .post("http://localhost:8090/user/" + this.props.match.params.id + "/" + sessionStorage.getItem("userType"),user)
+      .put("http://localhost:8090/user/" + this.props.match.params.id + "/" + sessionStorage.getItem("userType"),user)
       .then((res) => console.log(res.data));
 
     window.location = "/users";
@@ -148,3 +148,4 @@ export class EditUser extends Component {
 }
 
 export default EditUser;
+

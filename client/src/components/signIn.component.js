@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import '../assets/scss/signin.css';
+import '../assets/css/signin.css';
+
+const initialState = {
+  userType: "",
+  name: "",
+  password: "",
+  role: "manufacturer",
+};
 
 export class SignIn extends Component {
   constructor(props) {
@@ -12,12 +19,8 @@ export class SignIn extends Component {
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
-    this.state = {
-      userType: "",
-      name: "",
-      password: "",
-      role: "manufacturer",
-    };
+    this.state = {...initialState};
+    sessionStorage.clear();
   }
 
   onChangeUserType(e) {
@@ -43,7 +46,7 @@ export class SignIn extends Component {
       });
     }
     this.setState({
-      userType: e.target.value,
+      userType : e.target.value
     });
   }
 
@@ -67,7 +70,7 @@ export class SignIn extends Component {
     };
     console.log(signIn);
 
-    
+
     await axios
       .post("http://localhost:8090/user/signin/" + this.state.role, signIn)
       .then((res) => {
@@ -76,106 +79,91 @@ export class SignIn extends Component {
         sessionStorage.setItem("jwtToken", res.data.data.accessToken);
         sessionStorage.setItem("role", this.state.role);
         sessionStorage.setItem("userType", res.data.data.UserType);
+        // sessionStorage.setItem("detailUserType", res.data.data.UserType);
         sessionStorage.setItem("userId", res.data.data.id);
-        this.userType = res.data.data.UserType;
-        this.role = res.data.data.id;
+        sessionStorage.setItem("userName", res.data.data.Name);
+        this.state.userType = res.data.data.UserType;
+      })
+      .catch((err) => {
+        alert("Incorrect login information, please try again!");
+        this.setState(initialState);
+        console.log(this.state);
       });
-      console.log(sessionStorage.getItem("userType"),sessionStorage.getItem("userId"));
-      //console.log(this.userType,this.role);
-    //if (this.state.usertype === "admin") {
-        window.location = "/users";
-    //}
-    // else {
-    //   window.location = "/products"
-    // }
-    // switch (this.state.userType) {
-    //     case "admin":
-    //         console.log("admin");
-    //         window.location = "/users"
-    //         break;
-    //     case "manufacturer":
-    //         console.log("manufacturer");
-    //         window.location = "/products"
-    //         break;
-    //     case "middlemen":
-    //         console.log("middlemen");
-    //         window.location = "/products"
-    //         break;
-    //     case "consumer":
-    //         console.log("consumer");
-    //         window.location = "/products"
-    //         break;
-    //     default:
-    //         break;
-    // }
-
+    console.log("logged in as: "+sessionStorage.getItem("userType"), sessionStorage.getItem("userId"));
+    if (sessionStorage.getItem("userType") === "admin") {
+      window.location = "/users";
+    }
+    else if(sessionStorage.getItem("userType")) {
+      window.location = "/products";
+    }
+    
   }
 
   render() {
     return (
       <div class="container" id="signIn">
         <div class="row">
-            <div class="col-lg-3 col-md-2"></div>
-            <div class="col-lg-6 col-md-8 login-box">
-                <div class="col-lg-12 login-key">
-                    <i class="fa fa-key" aria-hidden="true"></i>
-                </div>
-                <div class="col-lg-12 login-title">
-                    Sign-In
-                </div>
-
-                <div class="col-lg-12 login-form">
-                    <div class="col-lg-12 login-form">
-                        <form onSubmit={this.onSubmit}>
-                        <div className="form-group">
-                          <label>Usertype: </label>
-                          <select
-                            ref="usertypeInput"
-                            required
-                            className="form-control"
-                            value={this.state.userType}
-                            onChange={this.onChangeUserType}>
-                                <option key="admin" value="admin">
-                                    Admin
-                                </option>
-                                <option key="manufacturer" value="manufacturer">
-                                    Manufacturer
-                                </option>
-                                <option key="distributor" value="distributor">
-                                    Distributor
-                                </option>
-                                <option key="wholesaler" value="wholesaler">
-                                    Wholesaler
-                                </option>
-                                <option key="retailer" value="retailer">
-                                    Retailer
-                                </option>
-                                <option key="consumer" value="consumer">
-                                    Consumer
-                                </option>
-                            </select>
-                          </div>
-                          <div class="form-group">
-                              <label class="form-control-label">USERNAME</label>
-                              <input onChange={this.onChangeName} type="text" class="form-control"/>
-                          </div>
-                          <div class="form-group">
-                              <label class="form-control-label">PASSWORD</label>
-                              <input onChange={this.onChangePassword} type="password" class="form-control" />
-                          </div>
-
-                          <div class="col-lg-12 loginbttm">
-                              <div class="col-lg-6 login-btm login-text">
-                              </div>
-                              <div class="col-lg-6 login-btm login-button">
-                                  <button type="submit" class="btn btn-outline-primary">LOGIN</button>
-                              </div>
-                          </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-2"></div>
+          <div class="col-lg-3 col-md-2"></div>
+          <div class="col-lg-6 col-md-8 login-box">
+            <div class="col-lg-12 login-key">
+              <i class="fa fa-key" aria-hidden="true"></i>
             </div>
+            <div class="col-lg-12 login-title">
+              Sign-In
+            </div>
+
+            <div class="col-lg-12 login-form">
+              <div class="col-lg-12 login-form">
+                <form onSubmit={this.onSubmit}>
+                  <div className="form-group">
+                    <label>Usertype: </label>
+                    <select
+                      ref="usertypeInput"
+                      required
+                      className="form-control"
+                      value={this.state.userType}
+                      onChange={this.onChangeUserType}>
+                      <option key="admin" value="admin">
+                        Admin
+                      </option>
+                      <option key="manufacturer" value="manufacturer">
+                        Manufacturer
+                      </option>
+                      <option key="distributor" value="distributor">
+                        Distributor
+                      </option>
+                      <option key="wholesaler" value="wholesaler">
+                        Wholesaler
+                      </option>
+                      <option key="retailer" value="retailer">
+                        Retailer
+                      </option>
+                      <option key="consumer" value="consumer">
+                        Consumer
+                      </option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label">USERNAME</label>
+                    <input onChange={this.onChangeName} type="text" class="form-control" value={this.state.name}/>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label">PASSWORD</label>
+                    <input onChange={this.onChangePassword} type="password" class="form-control" value={this.state.password} />
+                  </div>
+
+                  <div class="col-lg-12 loginbttm">
+                    <div class="col-lg-6 login-btm login-text">
+                    </div>
+                    <div class="col-lg-6 login-btm login-button" style={{marginLeft:"30px"}}>
+                      <button type="submit" class="btn btn-outline-primary">LOGIN</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-2"></div>
+          </div>
         </div>
       </div>
     );

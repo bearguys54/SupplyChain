@@ -10,7 +10,7 @@ const User = (props) => (
     <td>{props.user.UserType}</td>
     <td>{props.user.Address}</td>
     <td>
-      <Link to={"/updateUser/" + props.user.UserID}>Edit</Link>
+      <Link to={"/updateUser/" + props.user._id}>Edit</Link>
     </td>
   </tr>
 );
@@ -29,18 +29,20 @@ export class UsersList extends Component {
     const headers = {
       "x-access-token": sessionStorage.getItem('jwtToken')
     };
-    const role = sessionStorage.getItem('role')
+    const userType = sessionStorage.getItem('userType');
     console.log(sessionStorage.getItem("userType"),sessionStorage.getItem("userId"));
-
-    axios
-      .get("http://localhost:8090/user/all/manufacturer", {headers: headers})
-      .then((response) => {
-        this.setState({
-            users: response.data.data,
-        });
-        console.log(response.data.data);
-      })
-      .catch((error) => console.log(error));
+    if(userType){
+      axios
+        .get("http://localhost:8090/user/all/manufacturer", {headers: headers})
+        .then((response) => {
+          this.setState({
+              users: response.data.data,
+          });
+          console.log(response.data.data);
+        })
+        .catch((error) => console.log(error));
+    }
+    console.log("logged in as: "+sessionStorage.getItem("userType"), sessionStorage.getItem("userId"));
   }
 
   usersList() {

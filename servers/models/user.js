@@ -26,7 +26,7 @@ exports.signup = async (isManufacturer, isMiddlemen, isConsumer, information) =>
 exports.signin = async (isManufacturer, isMiddlemen, isConsumer, information) => {
     const { id, password } = information;
     console.log("conneting");
-    const networkObj = await network.connect(isManufacturer, isMiddlemen, isConsumer, "admin");
+    const networkObj = await network.connect(isManufacturer, isMiddlemen, isConsumer, id);
     let contractRes;
     console.log("conneted");
     contractRes = await network.invoke(networkObj, 'signIn', id, password);
