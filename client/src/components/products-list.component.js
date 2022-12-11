@@ -17,8 +17,13 @@ const Product = (props) => (
     <td>{props.product.Date.SellToConsumerDate.substring(0, 10)}</td>
     <td>{props.product.Status}</td>
     <td>{props.product.Price}</td>
+    { (sessionStorage.getItem('userType') === "manufacturer") ? 
     <td class="">
-    <Link to={"/updateProduct/" + props.product.ProductID}>Edit</Link>
+    <Link to={"/product/edit/" + props.product.ProductID}>Edit</Link>
+
+    </td>:""}
+    <td class="">
+    <Link to={"/product/send/" + props.product.ProductID}>Send</Link>
 
     </td>
   </tr>
@@ -41,8 +46,8 @@ export class ProductsList extends Component {
 
   componentDidMount() {
     const headers = {
-      //"id": sessionStorage.getItem("jwtToken"),
-      "id": "User1"
+      "x-access-token": sessionStorage.getItem('jwtToken')
+      // "id": "User1"
     };
     const signIn = {
       id: this.state.name,
@@ -90,7 +95,8 @@ export class ProductsList extends Component {
               <th>SellToConsumerDate</th>
               <th>Status</th>
               <th>Price</th>
-              <th>Actions</th>
+              { (sessionStorage.getItem('userType') === "manufacturer") ? 
+              <th colSpan={2}>Actions</th>:<th>Actions</th>}
             </tr>
           </thead>
           <tbody>{this.productsList()}</tbody>

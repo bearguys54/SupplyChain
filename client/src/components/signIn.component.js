@@ -129,11 +129,11 @@ export class SignIn extends Component {
                       <option key="manufacturer" value="manufacturer">
                         Manufacturer
                       </option>
-                      <option key="distributor" value="distributor">
-                        Distributor
-                      </option>
                       <option key="wholesaler" value="wholesaler">
                         Wholesaler
+                      </option>
+                      <option key="distributor" value="distributor">
+                        Distributor
                       </option>
                       <option key="retailer" value="retailer">
                         Retailer

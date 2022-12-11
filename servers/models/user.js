@@ -42,8 +42,7 @@ exports.signin = async (isManufacturer, isMiddlemen, isConsumer, information) =>
     return apiResponse.createModelRes(200, 'Success', { id, UserType, Name, accessToken });
 };
 
-exports.getAllUser = async (isManufacturer, isMiddlemen, isConsumer, information) => {
-    const { id } = information;
+exports.getAllUser = async () => {
 
     const networkObj = await network.connect(true, false, false, 'admin');
 
@@ -68,6 +67,22 @@ exports.getUserById = async (isManufacturer, isMiddlemen, isConsumer, informatio
     if (error) {
         const status = networkObj.status || contractRes.status;
         return apiResponse.createModelRes(status, error);
+    }
+    return apiResponse.createModelRes(200, 'Success', contractRes);
+};
+
+exports.getUserByUserType = async (role) => {
+    
+    const allUSer = (await exports.getAllUser()).data;
+    let contractRes;
+    if (role === "manufacturer") {
+        contractRes = allUSer.filter((item) => item.Record.UserType === "wholesaler" );
+    } else if (role === "wholesaler") {
+        contractRes = allUSer.filter((item) => item.Record.UserType === "distributor" );
+    }else if (role === "distributor") {
+        contractRes = allUSer.filter((item) => item.Record.UserType === "retailer" );
+    }else if (role === "retailer") {
+        contractRes = allUSer.filter((item) => item.Record.UserType === "consumer" );
     }
     return apiResponse.createModelRes(200, 'Success', contractRes);
 };

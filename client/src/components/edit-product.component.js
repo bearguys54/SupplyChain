@@ -37,7 +37,7 @@ export class EditProduct extends Component {
     this.transactTargetId = "";
 
     this.state = {
-      loggedUserType: sessionStorage.getItem("UserType"),
+      loggedUserType: sessionStorage.getItem("userType"),
       product_name: "",
       date: {
         manufacturerDate: "",
@@ -57,7 +57,8 @@ export class EditProduct extends Component {
       price: 0,
       manufacturers: [],
       users: [],
-      transactMsg: "Placeholder"
+      transactMsg: "Placeholder",
+      action: this.props.match.params.action,
     };
 
   }
@@ -76,12 +77,12 @@ export class EditProduct extends Component {
         //console.log(response.data);
       })
     axios
-      .get("http://localhost:8090/user/all/manufacturer")
+      .get("http://localhost:8090/user/all/"+this.state.loggedUserType)
       .then((response) => {
         this.setState({
           users: response.data.data,
         });
-        //console.log(response.data.data);
+        console.log(response.data);
       })
       .catch((error) => console.log(error));
 
@@ -192,17 +193,6 @@ export class EditProduct extends Component {
     window.location = "/products";
   }
 
-  usersList() {
-    return this.state.users.map((currentUser) => {
-      return (
-        <User
-          user={currentUser.Record}
-          deleteUser={this.deleteUser}
-          key={currentUser.Key}
-        />
-      );
-    });
-  }
 
   usersList() {
     return this.state.users.map((currentUser) => {
@@ -233,7 +223,8 @@ export class EditProduct extends Component {
   render() {
     return (
       <div>
-        <h3>Update Product</h3>
+        { (this.state.action === "edit") ? <h3>Update Product</h3>:""}
+        { (this.state.action === "edit") ?
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label>ProductName: </label>
@@ -260,19 +251,9 @@ export class EditProduct extends Component {
               >
                 {this.state.manufacturer_id}
               </option>
-              {/* {this.state.manufacturers.map(function (manufacturer) {
-                return (
-                  <option
-                    key={manufacturer.user_id}
-                    value={manufacturer.user_id}
-                  >
-                    {manufacturer.user_id}
-                  </option>
-                );
-              })} */}
             </select>
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label>RetailerID: </label>
             <select
               ref="manufacturerInput"
@@ -287,18 +268,8 @@ export class EditProduct extends Component {
               >
                 {this.state.manufacturer_id}
               </option>
-              {/* {this.state.manufacturers.map(function (manufacturer) {
-                return (
-                  <option
-                    key={manufacturer.user_id}
-                    value={manufacturer.user_id}
-                  >
-                    {manufacturer.user_id}
-                  </option>
-                );
-              })} */}
             </select>
-          </div>
+          </div> */}
           <div className="form-group">
             <label>Manufacturer Date: </label>
             <div>
@@ -326,9 +297,10 @@ export class EditProduct extends Component {
             />
           </div>
         </form>
+        :""}
 
         {/*======================================== This is for user other than manufacturer (move this somewhere later) ================================*/}
-
+        { (this.state.action === "send") ? 
         <form onSubmit={this.beginTransact}>
           <h3>{this.TransactLabel()}</h3>
           <div className="form-group">
@@ -352,8 +324,8 @@ export class EditProduct extends Component {
             >Submit</button>
           </div>
         </form>
-
-        <div>
+        :""}
+        {/* <div>
           <h3>Users List</h3>
           <table className="table">
             <thead className="thead-light">
@@ -367,7 +339,7 @@ export class EditProduct extends Component {
             </thead>
             <tbody>{this.usersList()}</tbody>
           </table>
-        </div>
+        </div> */}
       </div>
     );
   }

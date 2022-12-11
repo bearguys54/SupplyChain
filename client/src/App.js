@@ -26,7 +26,7 @@ function App() {
         <Route path="/createProduct" component={CreateProduct} />
         <Route path="/createOrder" component={CreateOrder} />
         <Route path="/updateUser/:id" component={EditUser} />
-        <Route path="/updateProduct/:id" component={EditProduct} />
+        <Route path="/product/:action/:id" component={EditProduct} />
         <Route path="/users" component={UsersList} />
         <Route path="/orders" component={OrdersList} />
       </div>

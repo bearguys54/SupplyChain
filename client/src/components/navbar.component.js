@@ -40,11 +40,13 @@ export class Navbar extends Component {
             { (role === "admin") ? elementUsers:""}
             { (role === "manufacturer") ? elementCreateProduct:""}
             { (role&&role !== "admin")?elementProducts:""}
-            {/* <li className="navbar-item">
+            {(role === "consumer") ?<li className="navbar-item">
               <Link to="/createOrder" className="nav-link">
                 Create Order
               </Link>
             </li>
+            :""}
+            {/*
             <li className="navbar-item">
               <Link to="/orders" className="nav-link">
                 Orders

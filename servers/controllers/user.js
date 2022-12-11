@@ -53,16 +53,13 @@ exports.signin = async (req, res) => {
 
 
 exports.getAllUser = async (req, res) => {
-    const { id } = req.body;
     const { role } = req.params;
 
     let modelRes;
-    if (role === 'manufacturer') {
-        modelRes = await authModel.getAllUser(true, false, false, {id});
-    } else if (role === 'middlemen') {
-        modelRes = await authModel.getAllUser(false, true, false, {id});
-    } else if (role === 'consumer') {
-        modelRes = await authModel.getAllUser(false, false, true, {id});
+    if (role === 'admin') {
+        modelRes = await authModel.getAllUser();
+    } else if (role) {
+        modelRes = await authModel.getUserByUserType(role);
     } else {
         return apiResponse.badRequest(res);
     }
