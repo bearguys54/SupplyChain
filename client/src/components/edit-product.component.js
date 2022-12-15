@@ -34,6 +34,7 @@ export class EditProduct extends Component {
     this.onChangeTransactTargetId = this.onChangeTransactTargetId.bind(this);
     this.beginTransact = this.beginTransact.bind(this);
     this.handleTransactSubmit = this.handleTransactSubmit.bind(this);
+    this.drawTransact = this.drawTransact.bind(this);
     this.transactTargetId = "";
 
     this.state = {
@@ -97,7 +98,7 @@ export class EditProduct extends Component {
     } else if (currUserType === "distributor") {
       return "Send to Retailer"
     } else if (currUserType === "retailer") {
-      return "sell to Custommer"
+      return "Sell this product to ordered Custommer"
     }
   }
 
@@ -108,13 +109,16 @@ export class EditProduct extends Component {
   beginTransact(e) {
     e.preventDefault(); console.log('You clicked submit.');
     console.log("product id: " + this.props.match.params.id);
-
+    const currUserType = sessionStorage.getItem("userType");
     const currProduct = {
       id: "admin",
       loggedUserType: sessionStorage.getItem("userType"),
       productId: this.props.match.params.id,
       userId: this.transactTargetId,
     };
+    if(currUserType === "retailer"){
+      currProduct.userId = sessionStorage.getItem("userId");
+    }
     console.log("sending product with: " + currProduct.loggedUserType);
 
     axios
@@ -228,7 +232,24 @@ export class EditProduct extends Component {
     });
   }
 
+  drawTransact() {
+    const currUserType = sessionStorage.getItem("userType");
 
+    if (currUserType !== "retailer") {
+    return (
+    <select
+      // ref="manufacturerInput"
+      required
+      className="form-control"
+      onChange={this.onChangeTransactTargetId}
+    >
+      {this.wholesalerList()}
+    </select>
+    );
+    }else{
+      return;
+    }
+  }
 
   render() {
     return (
@@ -333,14 +354,15 @@ export class EditProduct extends Component {
           <h3>{this.TransactLabel()}</h3>
           <div className="form-group">
             <label>{this.TransactLabel()} with ID:</label>
-            <select
+            {/* <select
               // ref="manufacturerInput"
               required
               className="form-control"
               onChange={this.onChangeTransactTargetId}
             >
               {this.wholesalerList()}
-            </select>
+            </select> */}
+            {this.drawTransact()}
           </div>
           <div>
             <label>{this.state.transactMsg}</label>
