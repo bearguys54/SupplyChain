@@ -75,3 +75,22 @@ exports.createOrder = async information => {
 
     return apiResponse.createModelRes(200, 'Success', contractRes);
 };
+
+exports.deliverProduct = async information => {
+    const { productID, userId, id } = information;
+
+    // const networkObj = await network.connect(false, false, true, id); 
+    console.log("model begining connect with data: "+productID + userId+ id);
+    const networkObj = await network.connect(false, false, true, 'admin'); 
+
+    const contractRes = await network.invoke(networkObj, 'deliveredProduct', productID);
+    console.log("model end connect");
+
+    const error = networkObj.error || contractRes.error;
+    if (error) {
+        const status = networkObj.status || contractRes.status;
+        return apiResponse.createModelRes(status, error);
+    }
+
+    return apiResponse.createModelRes(200, 'Success', contractRes);
+};

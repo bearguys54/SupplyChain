@@ -6,6 +6,8 @@ const authMiddleware = require('../middlewares/auth.js');
 
 transactRouter.post('/', controller.transactProduct);
 transactRouter.post('/order', controller.orderProduct);
+transactRouter.post('/deliver', controller.deliverProduct);
+
 
 
 //transactRouter.use('/consumer', authMiddleware);

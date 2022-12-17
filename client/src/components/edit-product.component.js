@@ -35,6 +35,7 @@ export class EditProduct extends Component {
     this.beginTransact = this.beginTransact.bind(this);
     this.handleTransactSubmit = this.handleTransactSubmit.bind(this);
     this.drawTransact = this.drawTransact.bind(this);
+    this.drawEdit = this.drawEdit.bind(this);
     this.transactTargetId = "";
 
     this.state = {
@@ -116,7 +117,7 @@ export class EditProduct extends Component {
       productId: this.props.match.params.id,
       userId: this.transactTargetId,
     };
-    if(currUserType === "retailer"){
+    if (currUserType === "retailer") {
       currProduct.userId = sessionStorage.getItem("userId");
     }
     console.log("sending product with: " + currProduct.loggedUserType);
@@ -236,17 +237,122 @@ export class EditProduct extends Component {
     const currUserType = sessionStorage.getItem("userType");
 
     if (currUserType !== "retailer") {
-    return (
-    <select
-      // ref="manufacturerInput"
-      required
-      className="form-control"
-      onChange={this.onChangeTransactTargetId}
-    >
-      {this.wholesalerList()}
-    </select>
-    );
-    }else{
+      return (
+        <select
+          // ref="manufacturerInput"
+          required
+          className="form-control"
+          onChange={this.onChangeTransactTargetId}
+        >
+          {this.wholesalerList()}
+        </select>
+      );
+    } else {
+      return;
+    }
+  }
+  drawEdit() {
+    const currUserType = sessionStorage.getItem("userType");
+
+    if (currUserType === "manufacturer") {
+      return (
+        <div>
+          <h3>Update Product</h3>
+          <form onSubmit={this.onSubmit}>
+            <div className="form-group">
+              <label>ProductName: </label>
+              <input
+                type="text"
+                required
+                className="form-control"
+                value={this.state.product_name}
+                onChange={this.onChangeProductName}
+              />
+            </div>
+            <div className="form-group">
+              <label>ManufacturerID: </label>
+              <select
+                ref="manufacturerInput"
+                required
+                className="form-control"
+                value={this.state.manufacturer_id}
+                onChange={this.onChangeManufacturerId}
+              >
+                <option
+                  key={this.state.manufacturer_id}
+                  value={this.state.manufacturer_id}
+                >
+                  {this.state.manufacturer_id}
+                </option>
+                {/* {this.state.manufacturers.map(function (manufacturer) {
+                return (
+                  <option
+                    key={manufacturer.user_id}
+                    value={manufacturer.user_id}
+                  >
+                    {manufacturer.user_id}
+                  </option>
+                );
+              })} */}
+              </select>
+            </div>
+            <div className="form-group">
+              <label>RetailerID: </label>
+              <select
+                ref="manufacturerInput"
+                required
+                className="form-control"
+                value={this.state.manufacturer_id}
+                onChange={this.onChangeManufacturerId}
+              >
+                <option
+                  key={this.state.manufacturer_id}
+                  value={this.state.manufacturer_id}
+                >
+                  {this.state.manufacturer_id}
+                </option>
+                {/* {this.state.manufacturers.map(function (manufacturer) {
+                return (
+                  <option
+                    key={manufacturer.user_id}
+                    value={manufacturer.user_id}
+                  >
+                    {manufacturer.user_id}
+                  </option>
+                );
+              })} */}
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Manufacturer Date: </label>
+              <div>
+                <DatePicker
+                  selected={this.state.date.manufacturerDate}
+                  onChange={this.onChangeManufacturerDate}
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <label>Price: </label>
+              <input
+                type="number"
+                required
+                className="form-control"
+                value={this.state.price}
+                onChange={this.onChangePrice}
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="submit"
+                value="Update Product"
+                className="btn btn-primary"
+              />
+            </div>
+          </form>
+        </div>
+      );
+    } else {
       return;
     }
   }
@@ -254,107 +360,15 @@ export class EditProduct extends Component {
   render() {
     return (
       <div>
-        <h3>Update Product</h3>
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <label>ProductName: </label>
-            <input
-              type="text"
-              required
-              className="form-control"
-              value={this.state.product_name}
-              onChange={this.onChangeProductName}
-            />
-          </div>
-          <div className="form-group">
-            <label>ManufacturerID: </label>
-            <select
-              ref="manufacturerInput"
-              required
-              className="form-control"
-              value={this.state.manufacturer_id}
-              onChange={this.onChangeManufacturerId}
-            >
-              <option
-                key={this.state.manufacturer_id}
-                value={this.state.manufacturer_id}
-              >
-                {this.state.manufacturer_id}
-              </option>
-              {/* {this.state.manufacturers.map(function (manufacturer) {
-                return (
-                  <option
-                    key={manufacturer.user_id}
-                    value={manufacturer.user_id}
-                  >
-                    {manufacturer.user_id}
-                  </option>
-                );
-              })} */}
-            </select>
-          </div>
-          <div className="form-group">
-            <label>RetailerID: </label>
-            <select
-              ref="manufacturerInput"
-              required
-              className="form-control"
-              value={this.state.manufacturer_id}
-              onChange={this.onChangeManufacturerId}
-            >
-              <option
-                key={this.state.manufacturer_id}
-                value={this.state.manufacturer_id}
-              >
-                {this.state.manufacturer_id}
-              </option>
-              {/* {this.state.manufacturers.map(function (manufacturer) {
-                return (
-                  <option
-                    key={manufacturer.user_id}
-                    value={manufacturer.user_id}
-                  >
-                    {manufacturer.user_id}
-                  </option>
-                );
-              })} */}
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Manufacturer Date: </label>
-            <div>
-              <DatePicker
-                selected={this.state.date.manufacturerDate}
-                onChange={this.onChangeManufacturerDate}
-              />
-            </div>
-          </div>
-          <div className="form-group">
-            <label>Price: </label>
-            <input
-              type="number"
-              required
-              className="form-control"
-              value={this.state.price}
-              onChange={this.onChangePrice}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="submit"
-              value="Update Product"
-              className="btn btn-primary"
-            />
-          </div>
-        </form>
+          {this.drawEdit()}
 
         {/*======================================== This is for user other than manufacturer (move this somewhere later) ================================*/}
-
-        <form onSubmit={this.beginTransact}>
-          <h3>{this.TransactLabel()}</h3>
-          <div className="form-group">
-            <label>{this.TransactLabel()} with ID:</label>
-            {/* <select
+        <div>
+          <form onSubmit={this.beginTransact}>
+            <h3>{this.TransactLabel()}</h3>
+            <div className="form-group">
+              <label>{this.TransactLabel()} with ID:</label>
+              {/* <select
               // ref="manufacturerInput"
               required
               className="form-control"
@@ -362,33 +376,34 @@ export class EditProduct extends Component {
             >
               {this.wholesalerList()}
             </select> */}
-            {this.drawTransact()}
-          </div>
+              {this.drawTransact()}
+            </div>
+            <div>
+              <label>{this.state.transactMsg}</label>
+            </div>
+
+            <div className="form-group">
+              <button type="submit"
+                className="btn btn-primary"
+              >Confirm transaction</button>
+            </div>
+          </form>
+
           <div>
-            <label>{this.state.transactMsg}</label>
+            <h3>Users List</h3>
+            <table className="table">
+              <thead className="thead-light">
+                <tr>
+                  <th>UserID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Usertype</th>
+                  <th>Address</th>
+                </tr>
+              </thead>
+              <tbody>{this.usersList()}</tbody>
+            </table>
           </div>
-
-          <div className="form-group">
-            <button type="submit"
-              className="btn btn-primary"
-            >Submit</button>
-          </div>
-        </form>
-
-        <div>
-          <h3>Users List</h3>
-          <table className="table">
-            <thead className="thead-light">
-              <tr>
-                <th>UserID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Usertype</th>
-                <th>Address</th>
-              </tr>
-            </thead>
-            <tbody>{this.usersList()}</tbody>
-          </table>
         </div>
       </div>
     );

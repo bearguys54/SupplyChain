@@ -18,7 +18,7 @@ const Product = (props) => (
     <td>{props.product.Status}</td>
     <td>{props.product.Price}</td>
     <td class="">
-    <Link to={"/updateProduct/" + props.product.ProductID}>View detail</Link>
+      <Link to={"/updateProduct/" + props.product.ProductID}>View detail</Link>
 
     </td>
   </tr>
@@ -38,7 +38,7 @@ const ProductUser = (props) => (
     <td>{props.product.Status}</td>
     <td>{props.product.Price}</td>
     <td class="">
-    <Link to={"/createOrder/" + props.product.ProductID}>Order this product</Link>
+      <Link to={"/createOrder/" + props.product.ProductID}>Detail/Order</Link>
 
     </td>
   </tr>
@@ -71,9 +71,9 @@ export class ProductsList extends Component {
       password: this.state.password,
     };
     const userType = sessionStorage.getItem('userType');
-    if(userType){
+    if (userType) {
       axios
-        .get("http://localhost:8090/product/manufacturer", {headers: headers})
+        .get("http://localhost:8090/product/manufacturer", { headers: headers })
         .then((response) => {
           this.setState({
             products: response.data.data,
@@ -93,15 +93,38 @@ export class ProductsList extends Component {
             key={currentProduct.Key}
           />
         );
-      } else{
-      return (
-        <Product
-          product={currentProduct.Record}
-          deleteProduct={this.deleteProduct}
-          key={currentProduct.Key}
-        />
-      );
+      } else {
+        return (
+          <Product
+            product={currentProduct.Record}
+            deleteProduct={this.deleteProduct}
+            key={currentProduct.Key}
+          />
+        );
       }
+      // }  if(this.state.role === "manufacturer"){
+      //   if (currentProduct.Record.ConsumerID === sessionStorage.getItem('userId')) {
+      //     return (
+      //       <Product
+      //         product={currentProduct.Record}
+      //         deleteProduct={this.deleteProduct}
+      //         key={currentProduct.Key}
+      //       />
+      //     );
+      //     }else{return}
+
+      // }else if(this.state.role === "wholesaler"){
+      //   if (currentProduct.Record.ConsumerID === sessionStorage.getItem('userId')) {
+      //     return (
+      //       <Product
+      //         product={currentProduct.Record}
+      //         deleteProduct={this.deleteProduct}
+      //         key={currentProduct.Key}
+      //       />
+      //     );
+      //     }else{return}
+
+      // }
     });
   }
 
@@ -116,10 +139,10 @@ export class ProductsList extends Component {
               <th>ProductName</th>
               <th>ManufacturerId</th>
               <th>ManufacturerDate</th>
-              <th>SendToWholesalerDate</th>
-              <th>SendToDistributorDate</th>
-              <th>SendToRetailerDate</th>
-              <th>SellToConsumerDate</th>
+              <th>Wholesaler Date</th>
+              <th>Distributor Date</th>
+              <th>Retailer Date</th>
+              <th>Sold Date</th>
               <th>Status</th>
               <th>Price</th>
               <th>Actions</th>

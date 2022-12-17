@@ -242,7 +242,7 @@ export class CreateOrder extends Component {
             />
           </div>
           <div className="form-group">
-            <label>ManufacturerDate: </label>
+            <label>Manufacturer Date: </label>
             <input
               ref="manufacturerInput"
               disabled
@@ -260,7 +260,7 @@ export class CreateOrder extends Component {
             />
           </div>
           <div className="form-group">
-            <label>SendToWholesalerDate: </label>
+            <label>Send To Wholesaler Date: </label>
             <input
               ref="manufacturerInput"
               disabled
@@ -279,7 +279,7 @@ export class CreateOrder extends Component {
             />
           </div>
           <div className="form-group">
-            <label>SendToDistributorDate: </label>
+            <label>Send To Distributor Date: </label>
             <input
               ref="manufacturerInput"
               disabled
@@ -297,12 +297,21 @@ export class CreateOrder extends Component {
             />
           </div>
           <div className="form-group">
-            <label>SendToRetailerDate: </label>
+            <label>Send To Retailer Date: </label>
             <input
               ref="manufacturerInput"
               disabled
               className="form-control"
               value={this.state.sendToRetailerDate}
+            />
+          </div>
+          <div className="form-group">
+            <label>Deliver date: </label>
+            <input
+              ref="manufacturerInput"
+              disabled
+              className="form-control"
+              value={this.state.deliveredDate}
             />
           </div>
           <div className="form-group">

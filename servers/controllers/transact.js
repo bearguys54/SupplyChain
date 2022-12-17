@@ -63,6 +63,29 @@ exports.orderProduct = async (req, res) => {
     return apiResponse.send(res, modelRes);
 };
 
+exports.deliverProduct = async (req, res) => {
+    // find who initiates this event by decoding the token and getting the user type
+    const { id, loggedUserType , productID , userId } = req.body;
+    console.log('deliver call received with data: ' + productID+ userId);
+    
+    if ( !userId || !loggedUserType || !productID || !id) {
+        return apiResponse.badRequest(res);
+    }
+    console.log('Begining deliver');
+    let modelRes;
+    if(loggedUserType == 'consumer')
+    {
+        // call order product
+        console.log('calling model deliver');
+        modelRes = await transactModel.deliverProduct({ productID , userId , id });
+                
+    } else {
+        return apiResponse.badRequest(res);
+    }
+    console.log('3');
+    return apiResponse.send(res, modelRes);
+};
+
 exports.transactProductConsumer = async (req, res) => {
     // find who initiates this event by decoding the token and getting the user type
     const { id, loggedUserType, name , productId , userId } = req.body;

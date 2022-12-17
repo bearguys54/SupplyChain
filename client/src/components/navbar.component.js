@@ -32,9 +32,6 @@ export class Navbar extends Component {
       </li>
     let elementCreateOrder =
       <li className="navbar-item">
-        <Link to="/createOrder" className="nav-link">
-          Products
-        </Link>
         <Link to="/orders" className="nav-link">
           Orders
         </Link>
