@@ -53,13 +53,13 @@ exports.signin = async (req, res) => {
 
 
 exports.getAllUser = async (req, res) => {
-    const { role } = req.params;
+    const { role,targetUser } = req.params;
 
     let modelRes;
     if (role === 'admin') {
         modelRes = await authModel.getAllUser();
     } else if (role) {
-        modelRes = await authModel.getUserByUserType(role);
+        modelRes = await authModel.getUserByUserType(role,targetUser);
     } else {
         return apiResponse.badRequest(res);
     }
@@ -76,7 +76,7 @@ exports.getUserById = async (req, res) => {
     console.log('2');
     console.log('3');
     let modelRes;
-    if( role === 'admin' ) {
+    if( role) {
         modelRes = await authModel.getUserById(true, false, false, { userId, role });
     }else {
         return apiResponse.badRequest(res);
@@ -94,7 +94,7 @@ exports.updateUser = async (req, res) => {
     console.log('2');
 
     let modelRes
-    if( role === 'admin' ) {
+    if( role) {
         modelRes = await authModel.updateUser(true, false,false, { userId, name, email, usertype , address });
     } else {
         return apiResponse.badRequest(res);

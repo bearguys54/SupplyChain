@@ -44,9 +44,11 @@ exports.transactProduct = async (req, res) => {
 exports.orderProduct = async (req, res) => {
     // find who initiates this event by decoding the token and getting the user type
     const { id, loggedUserType , productID , userId } = req.body;
+    console.log('HI');
     console.log('order call received with data: ' + productID+ userId);
     
     if ( !userId || !loggedUserType || !productID || !id) {
+        console.log('He');
         return apiResponse.badRequest(res);
     }
     console.log('Begining order');
@@ -98,25 +100,6 @@ exports.transactProductConsumer = async (req, res) => {
     let modelRes;
     if(loggedUserType == 'retailer') {
         modelRes= await transactModel.sellToConsumer({ productId , id });
-    } else {
-        return apiResponse.badRequest(res);
-    }
-
-    console.log('3');
-    return apiResponse.send(res, modelRes);
-};
-exports.orderProduct = async (req, res) => {
-    // find who initiates this event by decoding the token and getting the user type
-    const {currproductId , user_id } = req.body;
-    const {role} = req.params;
-    console.log('1');
-    if (!currproductId || !user_id||role) {
-        return apiResponse.badRequest(res);
-    }
-    console.log('2');
-    let modelRes;
-    if(role == 'consumer') {
-        modelRes= await transactModel.orderProduct({ currproductId , user_id });
     } else {
         return apiResponse.badRequest(res);
     }

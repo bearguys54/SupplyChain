@@ -57,13 +57,13 @@ export class ProductsList extends Component {
     super(props);
 
     this.state = {
-      role: sessionStorage.getItem('role'),
+      role: sessionStorage.getItem('userType'),
       //role: "manufacturer",
       products: [],
     };
 
     this.setState({
-      role: sessionStorage.getItem('role'),
+      role: sessionStorage.getItem('userType'),
     });
   }
 

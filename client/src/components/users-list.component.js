@@ -34,7 +34,7 @@ export class UsersList extends Component {
     // if(userType){
     if (true) {
       axios
-        .get("http://localhost:8090/user/all/"+sessionStorage.getItem('userType'), {headers: headers})
+        .get("http://localhost:8090/user/all/"+sessionStorage.getItem('userType')+"/false", {headers: headers})
         .then((response) => {
           this.setState({
             users: response.data.data,

@@ -61,7 +61,7 @@ exports.getAllUser = async () => {
 exports.getUserById = async (isManufacturer, isMiddlemen, isConsumer, information) => {
     const {userId, role } = information;
 
-    const networkObj = await network.connect(true, false, false, role);
+    const networkObj = await network.connect(true, false, false, "admin");
 
     const contractRes = await network.invoke(networkObj, 'queryAsset', userId);
 
@@ -73,17 +73,20 @@ exports.getUserById = async (isManufacturer, isMiddlemen, isConsumer, informatio
     return apiResponse.createModelRes(200, 'Success', contractRes);
 };
 
-exports.getUserByUserType = async (role) => {
+exports.getUserByUserType = async (role,targetUser) => {
     
     const allUSer = (await exports.getAllUser()).data;
     let contractRes;
     if (role === "manufacturer") {
-        contractRes = allUSer.filter((item) => item.Record.UserType === "wholesaler" );
+        contractRes = (targetUser === "true")?allUSer.filter((item) => item.Record.UserType === "wholesaler" ):allUSer.filter((item) => item.Record.UserType === "manufacturer" );
     } else if (role === "wholesaler") {
-        contractRes = allUSer.filter((item) => item.Record.UserType === "distributor" );
+        contractRes = (targetUser === "true")?allUSer.filter((item) => item.Record.UserType === "distributor" ):allUSer.filter((item) => item.Record.UserType === "wholesaler" );
     }else if (role === "distributor") {
-        contractRes = allUSer.filter((item) => item.Record.UserType === "retailer" );
+        contractRes = (targetUser === "true")?allUSer.filter((item) => item.Record.UserType === "retailer" ):allUSer.filter((item) => item.Record.UserType === "distributor" );
     }else if (role === "retailer") {
+        contractRes = (targetUser === "true")?allUSer.filter((item) => item.Record.UserType === "consumer" ):allUSer.filter((item) => item.Record.UserType === "retailer" );
+    }else if(role === "consumer")
+    {
         contractRes = allUSer.filter((item) => item.Record.UserType === "consumer" );
     }
     return apiResponse.createModelRes(200, 'Success', contractRes);

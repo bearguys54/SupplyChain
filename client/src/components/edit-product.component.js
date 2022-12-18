@@ -79,7 +79,7 @@ export class EditProduct extends Component {
         //console.log(response.data);
       })
     axios
-      .get("http://localhost:8090/user/all/"+this.state.loggedUserType)
+      .get("http://localhost:8090/user/all/"+this.state.loggedUserType+"/true")
       .then((response) => {
         this.setState({
           users: response.data.data,
@@ -287,38 +287,12 @@ export class EditProduct extends Component {
               })} */}
               </select>
             </div>
-            <div className="form-group">
-              <label>RetailerID: </label>
-              <select
-                ref="manufacturerInput"
-                required
-                className="form-control"
-                value={this.state.manufacturer_id}
-                onChange={this.onChangeManufacturerId}
-              >
-                <option
-                  key={this.state.manufacturer_id}
-                  value={this.state.manufacturer_id}
-                >
-                  {this.state.manufacturer_id}
-                </option>
-                {/* {this.state.manufacturers.map(function (manufacturer) {
-                return (
-                  <option
-                    key={manufacturer.user_id}
-                    value={manufacturer.user_id}
-                  >
-                    {manufacturer.user_id}
-                  </option>
-                );
-              })} */}
-              </select>
-            </div>
+            
             <div className="form-group">
               <label>Manufacturer Date: </label>
               <div>
                 <DatePicker
-                  selected={this.state.date.manufacturerDate}
+                  selected={this.state.date.manufacturerDate.substring(0, 10)}
                   onChange={this.onChangeManufacturerDate}
                 />
               </div>
@@ -379,22 +353,6 @@ export class EditProduct extends Component {
               >Confirm transaction</button>
             </div>
           </form>
-
-          <div>
-            <h3>Users List</h3>
-            <table className="table">
-              <thead className="thead-light">
-                <tr>
-                  <th>UserID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Usertype</th>
-                  <th>Address</th>
-                </tr>
-              </thead>
-              <tbody>{this.usersList()}</tbody>
-            </table>
-          </div>
         </div>
       </div>
     );

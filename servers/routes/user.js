@@ -8,7 +8,7 @@ authRouter.use('/signup/:role', authMiddleware);
 
 
 authRouter.post('/signup/:role', controller.signup);
-authRouter.get('/all/:role', controller.getAllUser);
+authRouter.get('/all/:role/:targetUser', controller.getAllUser);
 authRouter.get('/:userId/:role', controller.getUserById);
 authRouter.put('/:userId/:role', controller.updateUser);
 authRouter.post('/signin/:role', controller.signin);

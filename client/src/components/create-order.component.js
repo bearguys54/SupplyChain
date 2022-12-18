@@ -27,7 +27,6 @@ export class CreateOrder extends Component {
   constructor(props) {
     super(props);
 
-    this.onSubmit = this.onSubmit.bind(this);
     this.beginTransact = this.beginTransact.bind(this);
 
     this.state = {
@@ -141,34 +140,7 @@ export class CreateOrder extends Component {
         console.log("transact failed");
         console.log(error);
       })
-
-  }
-
-  async onSubmit(e) {
-    e.preventDefault();
-    const product = {
-      // id: sessionStorage.getItem("userId"),
-      id: "admin",
-      loggedUserType: sessionStorage.getItem("userType"),
-      productId: this.props.match.params.id,
-      userId: sessionStorage.getItem("userId"),
-    };
-    const headers = {
-      "x-access-token": sessionStorage.getItem("jwtToken"),
-    };
-    await axios
-      .put("http://localhost:8090/transact/order", product)
-      .then((response) => {
-        // this.setState({
-        //   users: response.data.data,
-        // });
-        console.log("respond received, " + response.data.data);
-        this.setState({
-          orderMSG: "Order completed",
-        });
-      })
-
-    window.location = "/products";
+    window.location = "/orders";
   }
 
   usersList() {
@@ -325,22 +297,6 @@ export class CreateOrder extends Component {
             <label>{this.state.transactMsg}</label>
           </div>
         </form>
-
-        <div>
-          <h3>Users List</h3>
-          <table className="table">
-            <thead className="thead-light">
-              <tr>
-                <th>UserID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Usertype</th>
-                <th>Address</th>
-              </tr>
-            </thead>
-            <tbody>{this.usersList()}</tbody>
-          </table>
-        </div>
       </div>
     );
   }

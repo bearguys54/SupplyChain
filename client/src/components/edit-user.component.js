@@ -99,6 +99,7 @@ export class EditUser extends Component {
               onChange={this.onChangeEmail}
             />
           </div>
+          {(sessionStorage.getItem("userType")==="admin")?
           <div className="form-group">
             <label>Usertype: </label>
             <select
@@ -125,6 +126,7 @@ export class EditUser extends Component {
               </option>
             </select>
           </div>
+          :""}
           <div className="form-group">
             <label>Address: </label>
             <input
