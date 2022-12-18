@@ -96,3 +96,25 @@ exports.getAllProducts = async (req, res) => {
     return apiResponse.send(res, modelRes);
 };
 
+exports.createOrder = async (req, res) => {
+    // find who initiates this event by decoding the token and getting the user type
+    const { id, loggedUserType , productId , userId } = req.body;
+    console.log('1');
+    
+    if ( !userId || !loggedUserType || !productId || !id) {
+        return apiResponse.badRequest(res);
+    }
+    console.log('2');
+    let modelRes;
+    if(loggedUserType == 'consumer')
+    {
+        // call order product
+        modelRes = await productModel.createOrder({ productId , userId , id  });
+                
+    } else {
+        return apiResponse.badRequest(res);
+    }
+    console.log('3');
+    return apiResponse.send(res, modelRes);
+};
+
