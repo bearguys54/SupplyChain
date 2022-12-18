@@ -4,7 +4,7 @@ const apiResponse = require('../utils/apiResponse.js');
 exports.transactProduct = async (req, res) => {
     // find who initiates this event by decoding the token and getting the user type
     const { id, loggedUserType , productId , userId } = req.body;
-    console.log('1');
+    console.log('1',id, loggedUserType , productId , userId);
     
     if ( !userId || !loggedUserType || !productId || !id) {
         return apiResponse.badRequest(res);
@@ -25,7 +25,11 @@ exports.transactProduct = async (req, res) => {
     {
         // call send to Retailer
         modelRes = await transactModel.sendToRetailer({ productId , userId , id  });
-    } else {
+    }else if(loggedUserType == 'retailer')
+    {
+        modelRes = await exports.transactProductConsumer(req,res);
+    } 
+    else {
         return apiResponse.badRequest(res);
     }
     console.log('3');
@@ -34,9 +38,9 @@ exports.transactProduct = async (req, res) => {
 
 exports.transactProductConsumer = async (req, res) => {
     // find who initiates this event by decoding the token and getting the user type
-    const { id, loggedUserType, name , productId , userId } = req.body;
-    console.log('1');
-    if (!name || !userId || !loggedUserType || !productId || !id) {
+    const { id, loggedUserType , productId , userId } = req.body;
+    console.log('1',id, loggedUserType , productId , userId);
+    if (!userId || !loggedUserType || !productId || !id) {
         return apiResponse.badRequest(res);
     }
     console.log('2');

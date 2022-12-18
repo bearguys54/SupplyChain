@@ -11,12 +11,13 @@ const Product = (props) => (
     <td>{props.product.Name}</td>
     <td>{props.product.ManufacturerID}</td>
     <td>{props.product.Date.ManufactureDate.substring(0, 10)}</td>
+    <td>{props.product.Status}</td>
+    <td>{props.product.Price}</td>
     <td>{props.product.Date.SendToWholesalerDate.substring(0, 10)}</td>
     <td>{props.product.Date.SendToDistributorDate.substring(0, 10)}</td>
     <td>{props.product.Date.SendToRetailerDate.substring(0, 10)}</td>
     <td>{props.product.Date.SellToConsumerDate.substring(0, 10)}</td>
-    <td>{props.product.Status}</td>
-    <td>{props.product.Price}</td>
+    
     { (sessionStorage.getItem('userType') === "manufacturer") ? 
     <td class="">
     <Link to={"/product/edit/" + props.product.ProductID}>Edit</Link>
@@ -89,12 +90,13 @@ export class ProductsList extends Component {
               <th>ProductName</th>
               <th>ManufacturerId</th>
               <th>ManufacturerDate</th>
+              <th>Status</th>
+              <th>Price</th>
               <th>SendToWholesalerDate</th>
               <th>SendToDistributorDate</th>
               <th>SendToRetailerDate</th>
               <th>SellToConsumerDate</th>
-              <th>Status</th>
-              <th>Price</th>
+              
               { (sessionStorage.getItem('userType') === "manufacturer") ? 
               <th colSpan={2}>Actions</th>:<th>Actions</th>}
             </tr>

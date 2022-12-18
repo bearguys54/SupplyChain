@@ -82,6 +82,7 @@ export class EditProduct extends Component {
         this.setState({
           users: response.data.data,
         });
+        this.transactTargetId = this.state.users[0].Record.UserID;
         console.log(response.data);
       })
       .catch((error) => console.log(error));
