@@ -1,0 +1,24 @@
+.userlist{
+    background-color: rgb(100, 100, 212);
+    min-height: 520px;
+    box-sizing: border-box;
+}
+.userlist h3{
+    padding-top: 20px;
+    text-align: center;
+    text-shadow: 1px 1px;
+    color:aquamarine;
+}
+.userlist .table{
+    margin-top: 30px;
+    margin-left: 20px;
+    width: auto;
+    min-width: 1220px;
+    background-color: white;
+    box-shadow: 8px 8px;
+}
+.userlist .table th{
+    background-color: yellow;
+    color: black;
+    font-weight: bold;
+}

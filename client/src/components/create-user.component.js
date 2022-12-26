@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+import '../assets/css/createuser.css';
+
 export class CreateUser extends Component {
   constructor(props) {
     super(props);
@@ -87,10 +89,11 @@ export class CreateUser extends Component {
 
   render() {
     return (
-      <div>
+      <div className="create-user">
         <h3>Create New User</h3>
+        <div className="create-form">
         <form onSubmit={this.onSubmit}>
-          <div className="form-group">
+          <div className="form-group" style={{paddingTop:"8px"}}>
             <label>Name: </label>
             <input
               type="text"
@@ -164,6 +167,7 @@ export class CreateUser extends Component {
             />
           </div>
         </form>
+        </div>
       </div>
     );
   }

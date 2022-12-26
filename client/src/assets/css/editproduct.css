@@ -1,0 +1,35 @@
+.edit-product,.transaction{
+    background-color: rgb(100, 100, 212);
+    min-height: 520px;
+    box-sizing: border-box;
+}
+.edit-product h3,.transaction h3{
+    padding-top: 30px;
+    text-align: center;
+    text-shadow: 1px 1px;
+    color:aquamarine;
+    margin-bottom: 20px;
+}
+.edit-product .edit-form,.transaction .edit-form{
+    margin-left: 380px;
+    width: 500px;
+    background-color: aqua;
+    box-shadow: 8px 8px;
+}
+input[type="text"]{
+    padding-left: 5px;
+    border-radius: 5px;
+}
+.edit-product .edit-form .form-group,.transaction .edit-form .form-group{
+    margin-left: 20px;
+    width: 460px;
+    border-radius: 5px;
+}
+.edit-product .edit-form input[type="submit"]{
+    margin-bottom: 10px;
+    margin-left: 170px;
+}
+.transaction .edit-form button{
+    margin-bottom: 10px;
+    margin-left: 150px;
+}

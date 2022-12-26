@@ -1,0 +1,28 @@
+.create-order{
+    background-color: rgb(100, 100, 212);
+    min-height: 850px;
+    box-sizing: border-box;
+    border-radius: 3px;
+}
+.create-order h3{
+    padding-top: 20px;
+    text-align: center;
+    text-shadow: 1px 1px;
+    color:aquamarine;
+}
+.create-order .create-form{
+    margin-left: 280px;
+    width: 680px;
+    background-color: aqua;
+    box-shadow: 10px 12px;
+    margin-bottom: 20px;
+}
+.create-order .create-form .form-group{
+    margin-left: 120px;
+    width: 460px;
+    border-radius: 5px;
+    margin-bottom: 0px;
+}
+.create-order .create-form input[type="submit"]{
+    margin:15px 0px 0px 150px;
+}

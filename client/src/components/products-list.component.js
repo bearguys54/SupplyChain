@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const Product0 = 0;
+import '../assets/css/productlist.css';
 
 const Product = (props) => (
 
@@ -72,10 +72,6 @@ export class ProductsList extends Component {
       "x-access-token": sessionStorage.getItem('jwtToken')
       // "id": "User1"
     };
-    const signIn = {
-      id: this.state.name,
-      password: this.state.password,
-    };
     const userType = sessionStorage.getItem('userType');
     if (userType) {
       axios
@@ -136,7 +132,7 @@ export class ProductsList extends Component {
 
   render() {
     return (
-      <div>
+      <div className="productlist">
         <h3>Products List</h3>
         <table className="table">
           <thead className="thead-light">

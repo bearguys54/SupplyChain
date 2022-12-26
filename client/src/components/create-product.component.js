@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+import '../assets/css/createproduct.css';
+
 export class CreateProduct extends Component {
   constructor(props) {
     super(props);
@@ -53,10 +55,11 @@ export class CreateProduct extends Component {
 
   render() {
     return (
-      <div>
+      <div className="create-product">
         <h3>Create New Product</h3>
+        <div className="create-form">
         <form onSubmit={this.onSubmit}>
-          <div className="form-group">
+          <div className="form-group" style={{paddingTop:"15px"}}>
             <label>ProductName: </label>
             <input
               type="text"
@@ -84,6 +87,7 @@ export class CreateProduct extends Component {
             />
           </div>
         </form>
+        </div>
       </div>
     );
   }

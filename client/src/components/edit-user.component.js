@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+import '../assets/css/edituser.css';
+
 export class EditUser extends Component {
   constructor(props) {
     super(props);
@@ -78,10 +80,11 @@ export class EditUser extends Component {
 
   render() {
     return (
-      <div>
+      <div className="edit-user">
         <h3>Edit User</h3>
+        <div className="edit-form">
         <form onSubmit={this.onSubmit}>
-          <div className="form-group">
+          <div className="form-group" style={{paddingTop:"10px"}}>
             <label>Name: </label>
             <input
               type="text"
@@ -136,7 +139,7 @@ export class EditUser extends Component {
               onChange={this.onChangeAddress}
             />
           </div>
-          <div className="form-group">
+          <div className="form-group" style={{align:"center"}}>
             <input
               type="submit"
               value="Update User"
@@ -144,6 +147,7 @@ export class EditUser extends Component {
             />
           </div>
         </form>
+        </div>
       </div>
     );
   }

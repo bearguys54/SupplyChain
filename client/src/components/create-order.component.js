@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 //import { sendToWholesaler } from "../../../servers/models/transact";
+
+import '../assets/css/createorder.css';
 
 const User = (props) => (
   <tr>
@@ -51,8 +52,8 @@ export class CreateOrder extends Component {
       price: 0,
       manufacturers: [],
       users: [],
-      transactMsg: "Placeholder",
-      orderMSG: "placeHolder"
+      transactMsg: "",
+      orderMSG: ""
     };
 
     console.log("selected product: " + this.props);
@@ -155,18 +156,6 @@ export class CreateOrder extends Component {
     });
   }
 
-  usersList() {
-    return this.state.users.map((currentUser) => {
-      return (
-        <User
-          user={currentUser.Record}
-          deleteUser={this.deleteUser}
-          key={currentUser.Key}
-        />
-      );
-    });
-  }
-
   wholesalerList() {
     return this.state.users.map((currentUser) => {
       return (
@@ -183,10 +172,11 @@ export class CreateOrder extends Component {
 
   render() {
     return (
-      <div>
+      <div className="create-order">
         <h3>Product detail</h3>
+        <div className="create-form">
         <form onSubmit={this.beginTransact}>
-          <div className="form-group">
+          <div className="form-group" style={{paddingTop:"10px"}}>
             <label>ProductName: </label>
             <input
               //type="text"
@@ -286,7 +276,7 @@ export class CreateOrder extends Component {
               value={this.state.deliveredDate}
             />
           </div>
-          <div className="form-group">
+          <div className="form-group" >
             <input
               type="submit"
               value="Order this product"
@@ -297,6 +287,7 @@ export class CreateOrder extends Component {
             <label>{this.state.transactMsg}</label>
           </div>
         </form>
+        </div>
       </div>
     );
   }

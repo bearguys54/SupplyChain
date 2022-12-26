@@ -1,0 +1,30 @@
+.edit-user{
+    background-color: rgb(100, 100, 212);
+    min-height: 520px;
+    box-sizing: border-box;
+}
+.edit-user h3{
+    padding-top: 20px;
+    text-align: center;
+    text-shadow: 1px 1px;
+    color:aquamarine;
+}
+.edit-user .edit-form{
+    margin-left: 380px;
+    width: 500px;
+    background-color: aqua;
+    box-shadow: 8px 8px;
+}
+input[type="text"]{
+    padding-left: 5px;
+    border-radius: 5px;
+}
+.edit-user .edit-form .form-group{
+    margin-left: 20px;
+    width: 460px;
+    border-radius: 5px;
+}
+.edit-user .edit-form input[type="submit"]{
+    margin-bottom: 10px;
+    margin-left: 170px;
+}

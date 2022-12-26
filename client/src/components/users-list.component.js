@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+import '../assets/css/userlist.css';
+
 const User = (props) => (
   <tr>
     <td>{props.user.UserID}</td>
@@ -29,7 +31,6 @@ export class UsersList extends Component {
     const headers = {
       "x-access-token": sessionStorage.getItem('jwtToken')
     };
-    const userType = sessionStorage.getItem('userType');
     console.log(sessionStorage.getItem("userType"), sessionStorage.getItem("userId"));
     // if(userType){
     if (true) {
@@ -59,7 +60,7 @@ export class UsersList extends Component {
 
   render() {
     return (
-      <div>
+      <div className="userlist">
         <h3>Users List</h3>
         <table className="table">
           <thead className="thead-light">

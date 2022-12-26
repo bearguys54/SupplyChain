@@ -1,0 +1,30 @@
+.orderlist{
+    background-color: rgb(100, 100, 212);
+    min-height: 520px;
+    box-sizing: border-box;
+}
+.orderlist h3{
+    padding-top: 20px;
+    text-align: center;
+    text-shadow: 1px 1px;
+    color:aquamarine;
+}
+.orderlist .table{
+    margin-top: 30px;
+    margin-left: 20px;
+    width: auto;
+    width: 1230px;
+    background-color: white;
+    box-shadow: 8px 8px;
+}
+.orderlist .table th{
+    background-color: yellow;
+    color: black;
+    font-weight: bold;
+}
+.orderlist button{
+    margin-left: 500px;
+}
+.orderlist .form-group{
+    margin: 0px 15px;
+}

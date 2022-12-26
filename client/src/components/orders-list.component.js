@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Link } from "react-router-dom";
 import axios from "axios";
+
+import '../assets/css/orderlist.css';
 
 const Product = (props) => (
 
@@ -62,10 +63,6 @@ export class OrdersListComponent extends Component {
       //"id": sessionStorage.getItem("jwtToken"),
       "id": "User1"
     };
-    const signIn = {
-      id: this.state.name,
-      password: this.state.password,
-    };
     const userType = sessionStorage.getItem('userType');
     if (userType) {
       axios
@@ -82,7 +79,7 @@ export class OrdersListComponent extends Component {
   markAsDelivered(e) {
     e.preventDefault(); console.log('You clicked submit.');
     console.log("product id: " + this.state.product_id);
-    const currUserType = sessionStorage.getItem("userType");
+    // const currUserType = sessionStorage.getItem("userType");
     const currProduct = {
       id: "admin",
       loggedUserType: sessionStorage.getItem("userType"),
@@ -130,7 +127,7 @@ export class OrdersListComponent extends Component {
   }
 
   drawTransact() {
-    const currUserType = sessionStorage.getItem("userType");
+    // const currUserType = sessionStorage.getItem("userType");
     return (
     <select
       // ref="manufacturerInput"
@@ -172,7 +169,7 @@ export class OrdersListComponent extends Component {
 
   render() {
     return (
-      <div>
+      <div className='orderlist'>
         <h3>Products List</h3>
         <table className="table">
           <thead className="thead-light">
@@ -193,7 +190,7 @@ export class OrdersListComponent extends Component {
         </table>
         <form onSubmit={this.markAsDelivered}>
           <h3>Mark a product as delivered</h3>
-          <label>Select product ID:</label>
+          <label style={{marginLeft:"15px"}}>Select product ID:</label>
           <div className="form-group">
             
             {/* <select

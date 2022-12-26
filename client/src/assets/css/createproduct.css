@@ -1,0 +1,33 @@
+.create-product{
+    background-color: rgb(100, 100, 212);
+    min-height: 520px;
+    box-sizing: border-box;
+}
+.create-product h3{
+    padding-top: 30px;
+    text-align: center;
+    text-shadow: 1px 1px;
+    color:aquamarine;
+    margin-bottom: 20px;
+}
+.create-product .create-form{
+    margin-top: 40px;
+    margin-left: 380px;
+    width: 500px;
+    background-color: aqua;
+    box-shadow: 8px 8px;
+}
+input[type="text"]{
+    padding-left: 5px;
+    border-radius: 5px;
+}
+.create-product .create-form .form-group{
+    margin-left: 20px;
+    width: 460px;
+    border-radius: 5px;
+    margin-bottom: 0px;
+}
+.create-product .create-form input[type="submit"]{
+    margin:20px 0px;
+    margin-left: 170px;
+}

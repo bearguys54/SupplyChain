@@ -4,6 +4,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 //import { sendToWholesaler } from "../../../servers/models/transact";
 
+import '../assets/css/editproduct.css';
+
 const User = (props) => (
   <tr>
     <td>{props.user.UserID}</td>
@@ -59,7 +61,7 @@ export class EditProduct extends Component {
       price: 0,
       manufacturers: [],
       users: [],
-      transactMsg: "Placeholder",
+      transactMsg: "",
       action: this.props.match.params.action,
     };
 
@@ -247,10 +249,11 @@ export class EditProduct extends Component {
 
     if (currUserType === "manufacturer") {
       return (
-        <div>
+        <div className="edit-product">
           <h3>Update Product</h3>
+          <div className="edit-form">
           <form onSubmit={this.onSubmit}>
-            <div className="form-group">
+            <div className="form-group" style={{paddingTop:"10px"}}>
               <label>ProductName: </label>
               <input
                 type="text"
@@ -260,7 +263,7 @@ export class EditProduct extends Component {
                 onChange={this.onChangeProductName}
               />
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
               <label>ManufacturerID: </label>
               <select
                 ref="manufacturerInput"
@@ -275,28 +278,18 @@ export class EditProduct extends Component {
                 >
                   {this.state.manufacturer_id}
                 </option>
-                {/* {this.state.manufacturers.map(function (manufacturer) {
-                return (
-                  <option
-                    key={manufacturer.user_id}
-                    value={manufacturer.user_id}
-                  >
-                    {manufacturer.user_id}
-                  </option>
-                );
-              })} */}
               </select>
-            </div>
+            </div> */}
             
-            <div className="form-group">
+            {/* <div className="form-group">
               <label>Manufacturer Date: </label>
               <div>
                 <DatePicker
-                  selected={this.state.date.manufacturerDate.substring(0, 10)}
+                  selected={this.state.date.manufacturerDate}
                   onChange={this.onChangeManufacturerDate}
                 />
               </div>
-            </div>
+            </div> */}
             <div className="form-group">
               <label>Price: </label>
               <input
@@ -315,6 +308,7 @@ export class EditProduct extends Component {
               />
             </div>
           </form>
+          </div>
         </div>
       );
     } else {
@@ -326,13 +320,14 @@ export class EditProduct extends Component {
     return (
       <div>
           {this.drawEdit()}
-
+        {(sessionStorage.getItem("userType") === "manufacturer")?<br/>:""}
         {/*======================================== This is for user other than manufacturer (move this somewhere later) ================================*/}
-        <div>
+        <div className="transaction">
+          <h3>{this.TransactLabel()}</h3>
+          <div className="edit-form">
           <form onSubmit={this.beginTransact}>
-            <h3>{this.TransactLabel()}</h3>
-            <div className="form-group">
-              <label>{this.TransactLabel()} with ID:</label>
+            <div className="form-group" style={{paddingTop:"20px"}}>
+              <label style={{marginBottom:"20px"}}>{this.TransactLabel()} with ID:</label>
               {/* <select
               // ref="manufacturerInput"
               required
@@ -353,6 +348,7 @@ export class EditProduct extends Component {
               >Confirm transaction</button>
             </div>
           </form>
+          </div>
         </div>
       </div>
     );

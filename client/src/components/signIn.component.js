@@ -109,14 +109,14 @@ export class SignIn extends Component {
               <i class="fa fa-key" aria-hidden="true"></i>
             </div>
             <div class="col-lg-12 login-title">
-              Sign-In
+              LOG-IN
             </div>
 
             <div class="col-lg-12 login-form">
               <div class="col-lg-12 login-form">
                 <form onSubmit={this.onSubmit}>
                   <div className="form-group">
-                    <label>Usertype: </label>
+                    {/* <label>Usertype: </label> */}
                     <select
                       ref="usertypeInput"
                       required

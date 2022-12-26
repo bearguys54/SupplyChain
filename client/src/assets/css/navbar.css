@@ -1,6 +1,15 @@
-#signin{
-    margin-right:"0";
-    width:"auto";
-    background-color:"white";
-    border-radius:"30px 30px 30px 30px";
+.navbar-dark .navbar-brand{
+    font-weight: bold;
+    /* color: rgb(0, 89, 255); */
+}
+.bg-dark{
+    background-color: rgb(79, 95, 187) !important;
+}
+.navbar-dark .navbar-brand{
+    font-size: 22px;
+    color: rgb(52, 255, 52);
+}
+.navbar-dark .navbar-nav .nav-link{
+    color: orange;
+    font-weight: bold;
 }
